@@ -184,6 +184,11 @@ button {
   color: #fff;
 }
 
+button:hover {
+  background-color: darkorange;
+  cursor: pointer;
+}
+
 .view {
   width: 100vw;
   height: 100vh;
@@ -236,6 +241,7 @@ nav a {
 nav a.active {
   border-left: 2px solid orange;
   text-indent: 10px;
+  color: orange;
 }
 
 nav a:hover {
@@ -248,7 +254,7 @@ main {
 }
 
 main h2 {
-  padding: 20px 20px 10px;
+  padding: 20px 30px 10px;
   background-color: white;
   position: sticky;
   top: 0;
@@ -296,7 +302,34 @@ form button {
 
 .container__alt {
   align-items: center;
-  gap: 100px;
+  gap: 0;
+  margin-bottom: 5vh;
+}
+
+.container__alt > hr {
+  width: 100px;
+  border: none;
+  border-top: 1px solid grey;
+}
+
+.container__alt > div {
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  align-items: flex-start;
+}
+
+.container__alt:hover article {
+  border: 1px solid orange;
+}
+
+.container__alt:hover > hr {
+  border-top: 1px solid orange;
+}
+
+.issue_members button {
+  margin-top: 5vh;
 }
 
 article {
@@ -304,6 +337,7 @@ article {
   height: 225px;
   border-radius: 10px;
   border: 1px solid grey;
+  position: relative;
 }
 
 .fitContent {
@@ -343,7 +377,7 @@ article:hover h3 {
 .title h3 {
   font-size: 2.7em;
   font-size: 1.6em;
-  line-height: 1;
+  line-height: 1.2;
   color: grey;
 }
 
@@ -355,7 +389,7 @@ article span {
   height: 50%;
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px 20px;
+  padding: 15px 20px 20px;
 }
 
 .card_container .details div {
@@ -383,6 +417,19 @@ article span {
   cursor: pointer;
 }
 
+.sec_action {
+  position: absolute;
+  bottom: 27%;
+  right: 15px;
+  border: none !important;
+  color: orange !important;
+}
+
+.sec_action:hover {
+  background-color: transparent !important;
+  color: grey !important;
+}
+
 p {
   margin-bottom: 15px;
 }
@@ -391,4 +438,17 @@ p {
   position: absolute;
   bottom: 30px;
   right: 30px;
+}
+
+.edit_actions {
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 30px;
+}
+
+.edit_actions button:first-child {
+  width: 70%;
+  background-color: red;
 }

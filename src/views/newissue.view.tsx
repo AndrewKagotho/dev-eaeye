@@ -2,32 +2,30 @@ import { useState } from 'react'
 import { useAppContext } from '../utils/context'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { Card } from '../components/card'
-import { addIssue } from '../features/issue/issue.slice'
+import { fetchAllIssues, addIssue } from '../features/issue/issue.slice'
 import { fetchAllMembers } from '../features/member/member.slice'
 import { MemberType } from '../utils/types'
 
-export const NewIssue = () => {
+export const NewIssue = ({ toggleForm }) => {
   const { book: bookContext } = useAppContext()
   const { selectedBook } = bookContext
   const dispatch = useAppDispatch()
-  const [newIssue, setNewIssue] = useState(null)
+  // const [newIssue, setNewIssue] = useState(null)
   const [searchMember, setSearchMember] = useState(null)
   const memberState = useAppSelector((state) => state.member)
-  const isLoading = memberState.isLoading
   const members = memberState.data
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewIssue({ ...newIssue, [e.target.name]: e.target.value })
-  }
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setNewIssue({ ...newIssue, [e.target.name]: e.target.value })
+  // }
 
   const handleClick = (id: number) => {
     const object = members.find(({ nationalId }) => nationalId === id)
     setSearchMember(object)
   }
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = () => {
     dispatch(fetchAllMembers())
-    e.preventDefault()
   }
 
   const handleIssue = () => {
@@ -36,10 +34,16 @@ export const NewIssue = () => {
       memberNationalId: searchMember.nationalId
     }
     dispatch(addIssue(data))
-      .unwrap()
-      .then((res) => {
-        // console.log(res.issueId)
-      })
+    .unwrap()
+    .then((res) => {
+      alert('Created!')
+      if (res === 'Created') toggleForm()
+      dispatch(fetchAllIssues())
+    })
+  }
+
+  const clearSearch = () => {
+    setSearchMember(null)
   }
 
   return (
@@ -55,48 +59,48 @@ export const NewIssue = () => {
               { name: 'ISBN', content: selectedBook.isbn },
               { name: 'Quantity', content: selectedBook.quantity }
             ]}
-            actionText='none'
             fitContent
           />
-          <Card
-            id={searchMember?.nationalId}
-            title={searchMember?.firstName}
-            subtitle={searchMember?.lastName}
-            details={[
-              { name: 'National ID', content: searchMember?.nationalId },
-              { name: 'Email', content: searchMember?.email }
-            ]}
-            fitContent
-          />
-          <button onClick={handleIssue}>Complete issue</button>
+          {searchMember && (
+            <>
+              <hr />
+              <Card
+                id={searchMember?.nationalId}
+                title={searchMember?.firstName}
+                subtitle={searchMember?.lastName}
+                details={[
+                  { name: 'National ID', content: searchMember?.nationalId },
+                  { name: 'Email', content: searchMember?.email }
+                ]}
+                fitContent
+              />
+              <div>
+                <button onClick={handleIssue}>Complete issue</button>
+                <button onClick={clearSearch}>Clear</button>
+              </div>
+            </>
+          )}
         </section>
-        <p>Search for member...</p>
-        <form onSubmit={handleSearch}>
-          <input
-            type='text'
-            placeholder='Search members'
-            value='newIssue'
-            onChange={handleChange}
-            required
-          />
-          <button type='submit'>Add</button>
-        </form>
-        <section className='card_container'>
-          {members.map((member: MemberType) => (
-            <Card
-              key={member.nationalId}
-              id={member.nationalId}
-              title={member.firstName}
-              subtitle={member.lastName}
-              details={[
-                { name: 'National ID', content: member.nationalId },
-                { name: 'Email', content: member.email }
-              ]}
-              actionText='Select'
-              clickHandler={handleClick}
-              fitContent
-            />
-          ))}
+        <section className='issue_members'>
+          <p>Select member...</p>
+          <section className='card_container'>
+            {members.map((member: MemberType) => (
+              <Card
+                key={member.nationalId}
+                id={member.nationalId}
+                title={member.firstName}
+                subtitle={member.lastName}
+                details={[
+                  { name: 'National ID', content: member.nationalId },
+                  { name: 'Email', content: member.email }
+                ]}
+                actionText='Select'
+                clickHandler={handleClick}
+                fitContent
+              />
+            ))}
+          </section>
+          <button onClick={handleSearch}>Refresh members</button>
         </section>
       </div>
     </>

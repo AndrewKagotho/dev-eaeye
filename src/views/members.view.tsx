@@ -5,10 +5,12 @@ import type { MemberType } from '../utils/types'
 import { Card } from '../components/card'
 import { useAppContext } from '../utils/context'
 import { NewMember } from './newmember.view'
+import { UpdateMember } from './editmember.view'
 
 export const Members = () => {
-  const { member: memberContext } = useAppContext()
+  const { member: memberContext, editMember: editContext } = useAppContext()
   const { selectedMember, setSelectedMember } = memberContext
+  const { editMember, setEditMember } = editContext
   const dispatch = useAppDispatch()
   const memberState = useAppSelector((state) => state.member)
   const isLoading = memberState.isLoading
@@ -23,6 +25,7 @@ export const Members = () => {
   const handleClick = (id: number) => {
     const object = members.find(({ nationalId }) => nationalId === id)
     setSelectedMember(object)
+    setEditMember(true)
   }
 
   const toggleForm = () => {
@@ -34,40 +37,47 @@ export const Members = () => {
 
   return (
     <>
-      {!selectedMember.isMemberFormOpen && (
+      {!editMember && (
         <>
-          <h2>Members</h2>
-          <div className='view__main'>
-            <p>Members in the library registry.</p>
-            {isLoading && <div>Loading...</div>}
-            {!isLoading && members && (
-              <section className='card_container'>
-                {members.map((member: MemberType) => (
-                  <Card
-                    key={member.nationalId}
-                    id={member.nationalId}
-                    title={member.firstName}
-                    subtitle={member.lastName}
-                    details={[
-                      { name: 'National ID', content: member.nationalId },
-                      { name: 'Email', content: member.email }
-                    ]}
-                    actionText='Edit'
-                    clickHandler={handleClick}
-                  />
-                ))}
-              </section>
-            )}
-            {!isLoading && error && (
-              <div>Error: {error.message ?? 'Error loading content'}</div>
-            )}
-          </div>
+          {!selectedMember.isMemberFormOpen && (
+            <>
+              <h2>Members</h2>
+              <div className='view__main'>
+                <p>Members in the library registry.</p>
+                {isLoading && <div>Loading...</div>}
+                {!isLoading && members && (
+                  <section className='card_container'>
+                    {members.map((member: MemberType) => (
+                      <Card
+                        key={member.nationalId}
+                        id={member.nationalId}
+                        title={member.firstName}
+                        subtitle={member.lastName}
+                        details={[
+                          { name: 'National ID', content: member.nationalId },
+                          { name: 'Email', content: member.email }
+                        ]}
+                        actionText='Edit'
+                        clickHandler={handleClick}
+                      />
+                    ))}
+                  </section>
+                )}
+                {!isLoading && error && (
+                  <div>Error: {error.message ?? 'Error loading content'}</div>
+                )}
+              </div>
+            </>
+          )}
+          {selectedMember.isMemberFormOpen && (
+            <NewMember toggleForm={toggleForm} />
+          )}
+          <button className='toggleForm' onClick={toggleForm}>
+            {selectedMember.isMemberFormOpen ? 'Minimize' : 'Add member'}
+          </button>
         </>
       )}
-      {selectedMember.isMemberFormOpen && <NewMember />}
-      <button className='toggleForm' onClick={toggleForm}>
-        {selectedMember.isMemberFormOpen ? 'Minimize' : 'Add member'}
-      </button>
+      {editMember && <UpdateMember />}
     </>
   )
 }

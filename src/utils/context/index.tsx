@@ -17,11 +17,15 @@ export const AppProvider = ({ children }: ContextProviderProps) => {
   const [selectedIssue, setSelectedIssue] = useState({
     isIssueFormOpen: false
   } as SelectedIssueType)
+  const [editBook, setEditBook] = useState(false)
+  const [editMember, setEditMember] = useState(false)
 
   const value = {
     book: { selectedBook, setSelectedBook },
     member: { selectedMember, setSelectedMember },
-    issue: { selectedIssue, setSelectedIssue }
+    issue: { selectedIssue, setSelectedIssue },
+    editBook: { editBook, setEditBook },
+    editMember: { editMember, setEditMember }
   }
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }

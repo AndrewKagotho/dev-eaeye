@@ -6,7 +6,9 @@ export const Card = ({
   subtitle,
   details,
   actionText,
+  actionTextSec,
   clickHandler: handleClick,
+  clickHandlerSec,
   fitContent
 }: CardType) => {
   const CSS = fitContent ? 'fitContent' : ''
@@ -32,7 +34,16 @@ export const Card = ({
           ))}
         </div>
         {actionText && (
-          <button onClick={() => handleClick(id)}>{actionText}</button>
+          <button onClick={() => handleClick(id, actionText)}>
+            {actionText}
+          </button>
+        )}
+        {actionTextSec && (
+          <button
+            className='sec_action'
+            onClick={() => handleClick(id, actionTextSec)}>
+            {actionTextSec}
+          </button>
         )}
       </div>
     </article>

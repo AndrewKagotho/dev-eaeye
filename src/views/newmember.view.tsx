@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useAppDispatch } from '../hooks'
-import { addMember } from '../features/member/member.slice'
+import { fetchAllMembers, addMember } from '../features/member/member.slice'
 
-export const NewMember = () => {
+export const NewMember = ({ toggleForm }) => {
   const dispatch = useAppDispatch()
   const [newMember, setNewMember] = useState(null)
 
@@ -12,6 +12,12 @@ export const NewMember = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     dispatch(addMember(newMember))
+      .unwrap()
+      .then((res) => {
+        alert('Created!')
+        if (res === 'Created') toggleForm()
+        dispatch(fetchAllMembers())
+      })
     e.preventDefault()
   }
 

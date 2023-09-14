@@ -14,7 +14,6 @@ export const Nav = () => {
             <NavLink to='/members'>Members</NavLink>
             <NavLink to='/issues'>Issues</NavLink>
             <NavLink to='/returns'>Returns</NavLink>
-            <NavLink to='/registry'>Registry</NavLink>
           </nav>
           <main>
             <Outlet />

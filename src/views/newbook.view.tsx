@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useAppDispatch } from '../hooks'
-import { addBook } from '../features/book/book.slice'
+import { fetchAllBooks, addBook } from '../features/book/book.slice'
 
-export const NewBook = () => {
+export const NewBook = ({ toggleForm }) => {
   const dispatch = useAppDispatch()
   const [newBook, setNewBook] = useState(null)
 
@@ -12,6 +12,12 @@ export const NewBook = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     dispatch(addBook(newBook))
+      .unwrap()
+      .then((res) => {
+        alert('Created!')
+        if (res === 'Created') toggleForm()
+        dispatch(fetchAllBooks())
+      })
     e.preventDefault()
   }
 
@@ -19,6 +25,7 @@ export const NewBook = () => {
     <>
       <h2>New book</h2>
       <div className='view__main'>
+        <p>Provide book details.</p>
         <form onSubmit={handleSubmit}>
           <label>
             ISBN:
@@ -46,6 +53,16 @@ export const NewBook = () => {
               name='author'
               placeholder='Author'
               value={newBook?.author}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Quantity:
+            <input
+              type='number'
+              name='quantity'
+              placeholder='Quantity'
+              value={newBook?.quantity}
               onChange={handleChange}
             />
           </label>

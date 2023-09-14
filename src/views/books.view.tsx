@@ -6,9 +6,15 @@ import { fetchAllBooks } from '../features/book/book.slice'
 import { Card } from '../components/card'
 import { useAppContext } from '../utils/context'
 import { NewBook } from './newbook.view'
+import { UpdateBook } from './editbook.view'
 
 export const Books = () => {
-  const { book: bookContext, issue: issueContext } = useAppContext()
+  const {
+    book: bookContext,
+    issue: issueContext,
+    editBook: editContext
+  } = useAppContext()
+  const { editBook, setEditBook } = editContext
   const { selectedBook, setSelectedBook } = bookContext
   const { selectedIssue, setSelectedIssue } = issueContext
   const dispatch = useAppDispatch()
@@ -23,11 +29,15 @@ export const Books = () => {
     // eslint-disable-next-line
   }, [])
 
-  const handleClick = (id: number) => {
+  const handleClick = (id: number, type: string) => {
     const object = books.find(({ isbn }) => isbn === id)
     setSelectedBook(object)
-    setSelectedIssue({ ...selectedIssue, isIssueFormOpen: true })
-    navigate('/issues')
+    if (type === 'Issue') {
+      setSelectedIssue({ ...selectedIssue, isIssueFormOpen: true })
+      navigate('/issues')
+    } else if (type === 'Edit') {
+      setEditBook(true)
+    }
   }
 
   const toggleForm = () => {
@@ -39,40 +49,47 @@ export const Books = () => {
 
   return (
     <>
-      {!selectedBook.isBookFormOpen && (
+      {!editBook && (
         <>
-          <h2>Books</h2>
-          <div className='view__main'>
-            <p>Books in the library inventory.</p>
-            {isLoading && <div>Loading...</div>}
-            {!isLoading && books && (
-              <section className='card_container'>
-                {books.map((book: BookType) => (
-                  <Card
-                    key={book.isbn}
-                    id={book.isbn}
-                    title={book.title}
-                    subtitle={book.author}
-                    details={[
-                      { name: 'ISBN', content: book.isbn },
-                      { name: 'Quantity', content: book.quantity }
-                    ]}
-                    actionText='Issue'
-                    clickHandler={handleClick}
-                  />
-                ))}
-              </section>
-            )}
-            {!isLoading && error && (
-              <div>Error: {error.message ?? 'Error loading content'}</div>
-            )}
-          </div>
+          {!selectedBook.isBookFormOpen && (
+            <>
+              <h2>Books</h2>
+              <div className='view__main'>
+                <p>Books in the library inventory.</p>
+                {isLoading && <div>Loading...</div>}
+                {!isLoading && books && (
+                  <section className='card_container'>
+                    {books.map((book: BookType) => (
+                      <Card
+                        key={book.isbn}
+                        id={book.isbn}
+                        title={book.title}
+                        subtitle={book.author}
+                        details={[
+                          { name: 'ISBN', content: book.isbn },
+                          { name: 'Quantity', content: book.quantity }
+                        ]}
+                        actionText='Issue'
+                        actionTextSec='Edit'
+                        clickHandler={handleClick}
+                        clickHandlerSec={handleClick}
+                      />
+                    ))}
+                  </section>
+                )}
+                {!isLoading && error && (
+                  <div>Error: {error.message ?? 'Error loading content'}</div>
+                )}
+              </div>
+            </>
+          )}
+          {selectedBook.isBookFormOpen && <NewBook toggleForm={toggleForm} />}
+          <button className='toggleForm' onClick={toggleForm}>
+            {selectedBook.isBookFormOpen ? 'Minimize' : 'Add book'}
+          </button>
         </>
       )}
-      {selectedBook.isBookFormOpen && <NewBook />}
-      <button className='toggleForm' onClick={toggleForm}>
-        {selectedBook.isBookFormOpen ? 'Minimize' : 'Add book'}
-      </button>
+      {editBook && <UpdateBook />}
     </>
   )
 }

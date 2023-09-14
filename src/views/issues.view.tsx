@@ -65,7 +65,7 @@ export const Issues = () => {
           </div>
         </>
       )}
-      {selectedIssue.isIssueFormOpen && <NewIssue />}
+      {selectedIssue.isIssueFormOpen && <NewIssue toggleForm={toggleForm} />}
       <button className='toggleForm' onClick={toggleForm}>
         {selectedIssue.isIssueFormOpen ? 'Minimize' : 'Issue book'}
       </button>
