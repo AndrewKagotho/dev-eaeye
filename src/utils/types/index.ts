@@ -76,13 +76,23 @@ export type ContextProviderProps = {
 }
 
 export type CardType = {
-  id: string | number
+  id?: number
   title: string | number
   subtitle: string | number
   details: { name: string; content: string | number }[]
+  primaryAction?: (id: number) => void
   actionText?: string
-  actionTextSec?: string
-  clickHandler?: (id: string | number, type?: string) => void
-  clickHandlerSec?: (id: string | number, type?: string) => void
+  secondaryAction?: (id: number) => void
+  actionTextSecondary?: string
   fitContent?: boolean
 }
+
+export type ViewType = {
+  header: string
+  description: string
+  Component: React.ReactNode
+  action: React.MouseEventHandler<HTMLButtonElement>
+  actionText: string
+}
+
+export type DisplayType = 'create' | 'read' | 'update' | 'delete'

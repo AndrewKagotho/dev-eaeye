@@ -1,83 +1,61 @@
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../hooks'
+import { useEffect, useState } from 'react'
+import { useAppDispatch } from '../hooks'
+import { View } from '../components/view'
 import { fetchAllMembers } from '../features/member/member.slice'
-import type { MemberType } from '../utils/types'
-import { Card } from '../components/card'
-import { useAppContext } from '../utils/context'
-import { NewMember } from './newmember.view'
-import { UpdateMember } from './editmember.view'
+import { RenderMembers } from '../features/member/render.member'
+import { AddMember } from '../features/member/add.member'
+import { EditMember } from '../features/member/edit.member'
+import type { DisplayType, MemberType } from '../utils/types'
 
 export const Members = () => {
-  const { member: memberContext, editMember: editContext } = useAppContext()
-  const { selectedMember, setSelectedMember } = memberContext
-  const { editMember, setEditMember } = editContext
   const dispatch = useAppDispatch()
-  const memberState = useAppSelector((state) => state.member)
-  const isLoading = memberState.isLoading
-  const members = memberState.data
-  const error = memberState.error
+  const [display, setDisplay] = useState<DisplayType>('read')
+  const [selectedMember, setSelectedMember] = useState({} as MemberType)
 
   useEffect(() => {
     dispatch(fetchAllMembers())
     // eslint-disable-next-line
   }, [])
 
-  const handleClick = (id: number) => {
-    const object = members.find(({ nationalId }) => nationalId === id)
-    setSelectedMember(object)
-    setEditMember(true)
-  }
-
-  const toggleForm = () => {
-    setSelectedMember({
-      ...selectedMember,
-      isMemberFormOpen: !selectedMember.isMemberFormOpen
-    })
-  }
-
   return (
     <>
-      {!editMember && (
-        <>
-          {!selectedMember.isMemberFormOpen && (
-            <>
-              <h2>Members</h2>
-              <div className='view__main'>
-                <p>Members in the library registry.</p>
-                {isLoading && <div>Loading...</div>}
-                {!isLoading && members && (
-                  <section className='card_container'>
-                    {members.map((member: MemberType) => (
-                      <Card
-                        key={member.nationalId}
-                        id={member.nationalId}
-                        title={member.firstName}
-                        subtitle={member.lastName}
-                        details={[
-                          { name: 'National ID', content: member.nationalId },
-                          { name: 'Email', content: member.email }
-                        ]}
-                        actionText='Edit'
-                        clickHandler={handleClick}
-                      />
-                    ))}
-                  </section>
-                )}
-                {!isLoading && error && (
-                  <div>Error: {error.message ?? 'Error loading content'}</div>
-                )}
-              </div>
-            </>
-          )}
-          {selectedMember.isMemberFormOpen && (
-            <NewMember toggleForm={toggleForm} />
-          )}
-          <button className='toggleForm' onClick={toggleForm}>
-            {selectedMember.isMemberFormOpen ? 'Minimize' : 'Add member'}
-          </button>
-        </>
+      {display === 'read' && (
+        <View
+          header='Members'
+          description='Members in the library registry.'
+          Component={
+            <RenderMembers
+              setDisplay={setDisplay}
+              setSelectedMember={setSelectedMember}
+            />
+          }
+          action={() => setDisplay('create')}
+          actionText='Add member'
+        />
       )}
-      {editMember && <UpdateMember />}
+      {display === 'create' && (
+        <View
+          header='New book'
+          description='Provide book details.'
+          Component={<AddMember setDisplay={setDisplay} />}
+          action={() => setDisplay('read')}
+          actionText='Minimize'
+        />
+      )}
+      {display === 'update' && (
+        <View
+          header='Book update'
+          description='Provide updated details.'
+          Component={
+            <EditMember
+              setDisplay={setDisplay}
+              selectedMember={selectedMember}
+            />
+          }
+          action={() => setDisplay('read')}
+          actionText='Minimize'
+        />
+      )}
     </>
   )
 }

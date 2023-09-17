@@ -6,9 +6,9 @@ export const Card = ({
   subtitle,
   details,
   actionText,
-  actionTextSec,
-  clickHandler: handleClick,
-  clickHandlerSec,
+  actionTextSecondary,
+  primaryAction: handlePrimaryClick,
+  secondaryAction: handleSecondaryClick,
   fitContent
 }: CardType) => {
   const CSS = fitContent ? 'fitContent' : ''
@@ -25,8 +25,8 @@ export const Card = ({
       </div>
       <div className='details'>
         <div>
-          {details.map((detail) => (
-            <span>
+          {details.map((detail, index) => (
+            <span key={index}>
               {detail.name === 'Email'
                 ? detail.content
                 : `${detail.name}: ${detail.content}`}
@@ -34,15 +34,13 @@ export const Card = ({
           ))}
         </div>
         {actionText && (
-          <button onClick={() => handleClick(id, actionText)}>
-            {actionText}
-          </button>
+          <button onClick={() => handlePrimaryClick(id)}>{actionText}</button>
         )}
-        {actionTextSec && (
+        {actionTextSecondary && (
           <button
             className='sec_action'
-            onClick={() => handleClick(id, actionTextSec)}>
-            {actionTextSec}
+            onClick={() => handleSecondaryClick(id)}>
+            {actionTextSecondary}
           </button>
         )}
       </div>

@@ -19,6 +19,8 @@ export const NewIssue = ({ toggleForm }) => {
   //   setNewIssue({ ...newIssue, [e.target.name]: e.target.value })
   // }
 
+  console.log(selectedBook)
+
   const handleClick = (id: number) => {
     const object = members.find(({ nationalId }) => nationalId === id)
     setSearchMember(object)
@@ -34,12 +36,12 @@ export const NewIssue = ({ toggleForm }) => {
       memberNationalId: searchMember.nationalId
     }
     dispatch(addIssue(data))
-    .unwrap()
-    .then((res) => {
-      alert('Created!')
-      if (res === 'Created') toggleForm()
-      dispatch(fetchAllIssues())
-    })
+      .unwrap()
+      .then((res) => {
+        alert('Created!')
+        if (res === 'Created') toggleForm()
+        dispatch(fetchAllIssues())
+      })
   }
 
   const clearSearch = () => {
@@ -95,7 +97,7 @@ export const NewIssue = ({ toggleForm }) => {
                   { name: 'Email', content: member.email }
                 ]}
                 actionText='Select'
-                clickHandler={handleClick}
+                primaryAction={handleClick}
                 fitContent
               />
             ))}

@@ -54,7 +54,7 @@ export const Issues = () => {
                       { name: 'Issued on', content: issue.createdAt }
                     ]}
                     actionText='Edit'
-                    clickHandler={handleClick}
+                    primaryAction={handleClick}
                   />
                 ))}
               </section>
