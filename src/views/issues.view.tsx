@@ -1,74 +1,48 @@
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import { fetchAllIssues } from '../features/issue/issue.slice'
-import type { IssueType } from '../utils/types'
-import { Card } from '../components/card'
-import { useAppContext } from '../utils/context'
-import { NewIssue } from './newissue.view'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { useAppDispatch } from '../hooks'
+import { View } from '../components/view'
+import { fetchIssues } from '../features/issue/issue.slice'
+import { Search } from '../features/issue/search.issues'
+import { RenderIssues } from '../features/issue/render.issue'
+import type { DisplayType, IssueType } from '../utils/types'
 
 export const Issues = () => {
-  const { issue: issueContext } = useAppContext()
-  const { selectedIssue, setSelectedIssue } = issueContext
   const dispatch = useAppDispatch()
-  const issueState = useAppSelector((state) => state.issue)
-  const isLoading = issueState.isLoading
-  const issues = issueState.data
-  const error = issueState.error
+  const [display, setDisplay] = useState<DisplayType>('read')
+  const [selectedIssue, setSelectedIssue] = useState({} as IssueType)
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const typeParam = searchParams.get('type')
+  const itemParam = searchParams.get('item')
 
   useEffect(() => {
-    dispatch(fetchAllIssues())
+    dispatch(
+      fetchIssues({
+        type: typeParam as 'title' | 'isbn' | 'author',
+        item: itemParam
+      })
+    )
     // eslint-disable-next-line
-  }, [])
-
-  const handleClick = (id: number) => {
-    const object = issues.find(({ nationalId }) => nationalId === id)
-    setSelectedIssue(object)
-  }
-
-  const toggleForm = () => {
-    setSelectedIssue({
-      ...selectedIssue,
-      isIssueFormOpen: !selectedIssue.isIssueFormOpen
-    })
-  }
+  }, [typeParam, itemParam])
 
   return (
     <>
-      {!selectedIssue.isIssueFormOpen && (
-        <>
-          <h2>Issues</h2>
-          <div className='view__main'>
-            <p>Book issues recorded in the system.</p>
-            {isLoading && <div>Loading...</div>}
-            {!isLoading && issues && (
-              <section className='card_container'>
-                {issues.map((issue: IssueType) => (
-                  <Card
-                    key={issue.issueId}
-                    id={issue.issueId}
-                    title={`00${issue.issueId}`}
-                    subtitle='Issue ID'
-                    details={[
-                      { name: 'National ID', content: issue.memberNationalId },
-                      { name: 'ISBN', content: issue.bookIsbn },
-                      { name: 'Issued on', content: issue.createdAt }
-                    ]}
-                    actionText='Edit'
-                    primaryAction={handleClick}
-                  />
-                ))}
-              </section>
-            )}
-            {!isLoading && error && (
-              <div>Error: {error.message ?? 'Error loading content'}</div>
-            )}
-          </div>
-        </>
+      {display === 'read' && (
+        <View
+          header='Issues'
+          description='Book issues recorded in the system.'
+          SearchComponent={<Search setSearchParams={setSearchParams} />}
+          MainComponent={
+            <RenderIssues
+              setDisplay={setDisplay}
+              setSelectedBook={setSelectedIssue}
+            />
+          }
+          action={() => setDisplay('create')}
+          actionText='Add book'
+        />
       )}
-      {selectedIssue.isIssueFormOpen && <NewIssue toggleForm={toggleForm} />}
-      <button className='toggleForm' onClick={toggleForm}>
-        {selectedIssue.isIssueFormOpen ? 'Minimize' : 'Issue book'}
-      </button>
     </>
   )
 }

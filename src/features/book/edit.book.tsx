@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAppDispatch } from '../../hooks'
-import { fetchAllBooks, updateBook, deleteBook } from './book.slice'
+import { updateBook, deleteBook } from './book.slice'
 import type { BookType } from '../../utils/types'
 
 export const EditBook = ({ setDisplay, selectedBook }) => {
@@ -19,7 +19,6 @@ export const EditBook = ({ setDisplay, selectedBook }) => {
       .then((res) => {
         alert('Updated!')
         if (res === 'OK') setDisplay('read')
-        dispatch(fetchAllBooks())
       })
     e.preventDefault()
   }
@@ -30,7 +29,6 @@ export const EditBook = ({ setDisplay, selectedBook }) => {
       .then((res) => {
         alert('Deleted!')
         if (res === 'OK') setDisplay('read')
-        dispatch(fetchAllBooks())
       })
   }
 

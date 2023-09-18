@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useAppDispatch } from '../hooks'
 import { View } from '../components/view'
-import { fetchAllBooks } from '../features/book/book.slice'
+import { fetchBooks } from '../features/book/book.slice'
+import { Search } from '../features/book/search.book'
 import { RenderBooks } from '../features/book/render.book'
 import { AddBook } from '../features/book/add.book'
 import { EditBook } from '../features/book/edit.book'
@@ -11,11 +13,20 @@ export const Books = () => {
   const dispatch = useAppDispatch()
   const [display, setDisplay] = useState<DisplayType>('read')
   const [selectedBook, setSelectedBook] = useState({} as BookType)
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const typeParam = searchParams.get('type')
+  const itemParam = searchParams.get('item')
 
   useEffect(() => {
-    dispatch(fetchAllBooks())
+    dispatch(
+      fetchBooks({
+        type: typeParam as 'title' | 'isbn' | 'author',
+        item: itemParam
+      })
+    )
     // eslint-disable-next-line
-  }, [])
+  }, [typeParam, itemParam])
 
   return (
     <>
@@ -23,7 +34,8 @@ export const Books = () => {
         <View
           header='Books'
           description='Books in the library inventory.'
-          Component={
+          SearchComponent={<Search setSearchParams={setSearchParams} />}
+          MainComponent={
             <RenderBooks
               setDisplay={setDisplay}
               setSelectedBook={setSelectedBook}
@@ -37,7 +49,7 @@ export const Books = () => {
         <View
           header='New book'
           description='Provide book details.'
-          Component={<AddBook setDisplay={setDisplay} />}
+          MainComponent={<AddBook setDisplay={setDisplay} />}
           action={() => setDisplay('read')}
           actionText='Minimize'
         />
@@ -46,7 +58,7 @@ export const Books = () => {
         <View
           header='Book update'
           description='Provide updated details.'
-          Component={
+          MainComponent={
             <EditBook setDisplay={setDisplay} selectedBook={selectedBook} />
           }
           action={() => setDisplay('read')}

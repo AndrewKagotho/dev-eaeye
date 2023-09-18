@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAppDispatch } from '../../hooks'
-import { fetchAllMembers, addMember } from './member.slice'
+import { addMember } from './member.slice'
 import type { MemberType } from '../../utils/types'
 
 export const AddMember = ({ setDisplay }) => {
@@ -17,7 +17,6 @@ export const AddMember = ({ setDisplay }) => {
       .then((res) => {
         alert('Created!')
         if (res === 'Created') setDisplay('read')
-        dispatch(fetchAllMembers())
       })
     e.preventDefault()
   }

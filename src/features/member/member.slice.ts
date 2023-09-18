@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import type { InitialStateType, MemberType } from '../../utils/types'
+import type { InitialStateType, MemberType, QueryType } from '../../utils/types'
 import MemberService from '../../services/member.service'
 
 const initialState: InitialStateType = {
@@ -13,25 +13,25 @@ const memberSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAllMembers.pending, (state) => {
+    builder.addCase(fetchMembers.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(fetchAllMembers.fulfilled, (state, action) => {
+    builder.addCase(fetchMembers.fulfilled, (state, action) => {
       state.isLoading = false
       state.data = action.payload
       state.error = null
     })
-    builder.addCase(fetchAllMembers.rejected, (state, action) => {
+    builder.addCase(fetchMembers.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.error.message
     })
   }
 })
 
-export const fetchAllMembers = createAsyncThunk(
-  'allMembers/fetch',
-  async () => {
-    const res = await MemberService.getAllMembers()
+export const fetchMembers = createAsyncThunk(
+  'members/fetch',
+  async (data: QueryType) => {
+    const res = await MemberService.getMembers(data)
     return res.data
   }
 )

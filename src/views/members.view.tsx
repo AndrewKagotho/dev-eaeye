@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useAppDispatch } from '../hooks'
 import { View } from '../components/view'
-import { fetchAllMembers } from '../features/member/member.slice'
+import { fetchMembers } from '../features/member/member.slice'
+import { Search } from '../features/member/search.member'
 import { RenderMembers } from '../features/member/render.member'
 import { AddMember } from '../features/member/add.member'
 import { EditMember } from '../features/member/edit.member'
@@ -11,11 +13,20 @@ export const Members = () => {
   const dispatch = useAppDispatch()
   const [display, setDisplay] = useState<DisplayType>('read')
   const [selectedMember, setSelectedMember] = useState({} as MemberType)
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const typeParam = searchParams.get('type')
+  const itemParam = searchParams.get('item')
 
   useEffect(() => {
-    dispatch(fetchAllMembers())
+    dispatch(
+      fetchMembers({
+        type: typeParam as 'title' | 'isbn' | 'author',
+        item: itemParam
+      })
+    )
     // eslint-disable-next-line
-  }, [])
+  }, [typeParam, itemParam])
 
   return (
     <>
@@ -23,7 +34,8 @@ export const Members = () => {
         <View
           header='Members'
           description='Members in the library registry.'
-          Component={
+          SearchComponent={<Search setSearchParams={setSearchParams} />}
+          MainComponent={
             <RenderMembers
               setDisplay={setDisplay}
               setSelectedMember={setSelectedMember}
@@ -35,18 +47,18 @@ export const Members = () => {
       )}
       {display === 'create' && (
         <View
-          header='New book'
-          description='Provide book details.'
-          Component={<AddMember setDisplay={setDisplay} />}
+          header='New member'
+          description='Provide member details.'
+          MainComponent={<AddMember setDisplay={setDisplay} />}
           action={() => setDisplay('read')}
           actionText='Minimize'
         />
       )}
       {display === 'update' && (
         <View
-          header='Book update'
+          header='Member update'
           description='Provide updated details.'
-          Component={
+          MainComponent={
             <EditMember
               setDisplay={setDisplay}
               selectedMember={selectedMember}

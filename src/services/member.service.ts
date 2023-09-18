@@ -1,8 +1,8 @@
 import api from '../utils/libs/axios.lib'
-import type { MemberType } from '../utils/types'
+import type { MemberType, QueryType } from '../utils/types'
 
-const getAllMembers = () => {
-  return api('/members')
+const getMembers = ({ type, item }: QueryType) => {
+  return api.get(`/members?type=${type}&item=${item}`)
 }
 
 const createMember = (data: MemberType) => {
@@ -18,7 +18,7 @@ const deleteMember = ({ nationalId }: MemberType) => {
 }
 
 const MemberService = {
-  getAllMembers,
+  getMembers,
   createMember,
   updateMember,
   deleteMember

@@ -14,31 +14,30 @@ export const Card = ({
   const CSS = fitContent ? 'fitContent' : ''
   return (
     <article className={CSS}>
-      <div className='title'>
+      <div className='card_title'>
+        <h3>{title}</h3>
         <div>
-          <h3>{title}</h3>
-          <div>
-            <span>{subtitle}</span>
-            <hr />
-          </div>
+          <span>{subtitle}</span>
+          <hr />
         </div>
       </div>
-      <div className='details'>
-        <div>
-          {details.map((detail, index) => (
+      <div className='card_details'>
+        {details.map((detail, index) => {
+          let context = detail.name === 'Quantity' ? 'books' : ''
+          return (
             <span key={index}>
-              {detail.name === 'Email'
-                ? detail.content
-                : `${detail.name}: ${detail.content}`}
+              {detail.name}: {detail.content} {context}
             </span>
-          ))}
-        </div>
+          )
+        })}
+      </div>
+      <div className='card_actions'>
         {actionText && (
           <button onClick={() => handlePrimaryClick(id)}>{actionText}</button>
         )}
         {actionTextSecondary && (
           <button
-            className='sec_action'
+            className='card__action_secondary'
             onClick={() => handleSecondaryClick(id)}>
             {actionTextSecondary}
           </button>

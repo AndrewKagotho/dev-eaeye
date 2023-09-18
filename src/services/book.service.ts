@@ -1,8 +1,8 @@
 import api from '../utils/libs/axios.lib'
-import type { BookType } from '../utils/types'
+import type { BookType, QueryType } from '../utils/types'
 
-const getAllBooks = () => {
-  return api('/books')
+const getBooks = ({ type, item }: QueryType) => {
+  return api.get(`/books?type=${type}&item=${item}`)
 }
 
 const createBook = (data: BookType) => {
@@ -18,7 +18,7 @@ const deleteBook = ({ isbn }: BookType) => {
 }
 
 const BookService = {
-  getAllBooks,
+  getBooks,
   createBook,
   updateBook,
   deleteBook

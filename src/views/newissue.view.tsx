@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useAppContext } from '../utils/context'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { Card } from '../components/card'
-import { fetchAllIssues, addIssue } from '../features/issue/issue.slice'
-import { fetchAllMembers } from '../features/member/member.slice'
+import { fetchIssues, addIssue } from '../features/issue/issue.slice'
+// import { fetchAllMembers } from '../features/member/member.slice'
 import { MemberType } from '../utils/types'
 
 export const NewIssue = ({ toggleForm }) => {
@@ -27,7 +27,7 @@ export const NewIssue = ({ toggleForm }) => {
   }
 
   const handleSearch = () => {
-    dispatch(fetchAllMembers())
+    // dispatch(fetchAllMembers())
   }
 
   const handleIssue = () => {
@@ -40,7 +40,7 @@ export const NewIssue = ({ toggleForm }) => {
       .then((res) => {
         alert('Created!')
         if (res === 'Created') toggleForm()
-        dispatch(fetchAllIssues())
+        // dispatch(fetchIssues())
       })
   }
 

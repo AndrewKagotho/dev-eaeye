@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAppDispatch } from '../../hooks'
-import { fetchAllBooks, addBook } from './book.slice'
+import { addBook } from './book.slice'
 import type { BookType } from '../../utils/types'
 
 export const AddBook = ({ setDisplay }) => {
@@ -17,7 +17,6 @@ export const AddBook = ({ setDisplay }) => {
       .then((res) => {
         alert('Created!')
         if (res === 'Created') setDisplay('read')
-        dispatch(fetchAllBooks())
       })
     e.preventDefault()
   }

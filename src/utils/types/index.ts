@@ -90,9 +90,15 @@ export type CardType = {
 export type ViewType = {
   header: string
   description: string
-  Component: React.ReactNode
+  SearchComponent?: React.ReactNode
+  MainComponent: React.ReactNode
   action: React.MouseEventHandler<HTMLButtonElement>
   actionText: string
 }
 
 export type DisplayType = 'create' | 'read' | 'update' | 'delete'
+
+export type QueryType = {
+  type: 'isbn' | 'title' | 'author' | 'nationalId' | 'firstName' | 'lastName'
+  item: string
+}

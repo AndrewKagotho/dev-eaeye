@@ -3,16 +3,20 @@ import type { ViewType } from '../utils/types'
 export const View = ({
   header,
   description,
-  Component,
+  SearchComponent,
+  MainComponent,
   action,
   actionText
 }: ViewType) => {
   return (
     <>
-      <h2>{header}</h2>
-      <div className='view__main'>
+      <div className='main__banner'>
+        <h2>{header}</h2>
+        {SearchComponent}
+      </div>
+      <div className='main__content'>
         <p>{description}</p>
-        {Component}
+        {MainComponent}
         <button className='toggleForm' onClick={action}>
           {actionText}
         </button>

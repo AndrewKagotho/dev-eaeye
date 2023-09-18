@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import type { InitialStateType, IssueType } from '../../utils/types'
+import type { InitialStateType, IssueType, QueryType } from '../../utils/types'
 import IssueService from '../../services/issue.service'
 
 const initialState: InitialStateType = {
@@ -13,25 +13,28 @@ const issueSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAllIssues.pending, (state) => {
+    builder.addCase(fetchIssues.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(fetchAllIssues.fulfilled, (state, action) => {
+    builder.addCase(fetchIssues.fulfilled, (state, action) => {
       state.isLoading = false
       state.data = action.payload
       state.error = null
     })
-    builder.addCase(fetchAllIssues.rejected, (state, action) => {
+    builder.addCase(fetchIssues.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.error.message
     })
   }
 })
 
-export const fetchAllIssues = createAsyncThunk('allIssues/fetch', async () => {
-  const res = await IssueService.getAllIssues()
-  return res.data
-})
+export const fetchIssues = createAsyncThunk(
+  'issues/fetch',
+  async (data: QueryType) => {
+    const res = await IssueService.getIssues(data)
+    return res.data
+  }
+)
 
 export const addIssue = createAsyncThunk(
   'issue/add',

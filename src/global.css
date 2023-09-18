@@ -176,8 +176,36 @@ h2 {
   font-weight: 300;
 }
 
+form {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  text-indent: 5px;
+}
+
+input {
+  padding: 7px 10px 3px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid orange;
+}
+
+form button {
+  margin-top: 15px;
+}
+
 button {
-  padding: 5px 20px;
+  padding: 5px 20px 1px;
   border: none;
   border-radius: 10px;
   background-color: orange;
@@ -253,50 +281,71 @@ main {
   overflow-y: auto;
 }
 
-main h2 {
+.main__banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20px 30px 10px;
+}
+
+.main__banner h2 {
   background-color: white;
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
-.view__main {
+.form_search {
+  width: 40vw;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 30px;
+}
+
+.form_search input,
+select {
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.form_search input:focus,
+select:focus {
+  outline: none;
+  border-bottom: 1px solid orange;
+}
+
+.form_search input {
+  flex-grow: 2;
+}
+
+.form_search select {
+  padding: 7px 10px 3px;
+  flex-grow: 1;
+}
+
+.form_search button {
+  background-color: transparent;
+  color: orange;
+  border: 1px solid orange;
+  margin: 0;
+}
+
+.form_search button:hover {
+  background-color: orange;
+  color: white;
+}
+
+.main__content {
   padding: 0 50px;
   margin-bottom: 10vh;
-}
-
-form {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  text-indent: 5px;
-}
-
-input {
-  padding: 7px 10px 3px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-input:focus {
-  outline: none;
-  border: 1px solid orange;
-}
-
-form button {
-  margin-top: 15px;
 }
 
 .card_container {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 30px;
 }
 
@@ -334,14 +383,13 @@ form button {
 
 article {
   width: 225px;
-  height: 225px;
+  padding: 20px;
   border-radius: 10px;
   border: 1px solid grey;
-  position: relative;
 }
 
 .fitContent {
-  height: 170px;
+  /* height: 170px; */
 }
 
 article:hover {
@@ -352,82 +400,70 @@ article:hover h3 {
   color: orange;
 }
 
-.title {
-  width: 100%;
-  height: 50%;
-  position: relative;
+article span {
+  font-size: 0.9em;
 }
 
-.title > div {
-  margin: 0 20px;
-  position: absolute;
-  bottom: 0;
+article > * {
+  /* border: 1px solid red; */
 }
 
-.title div div {
+.card_title {
+  padding-top: 20px;
+}
+
+.card_title div {
   width: -moz-fit-content;
   width: fit-content;
 }
-.title div div hr {
+
+.card_title div hr {
+  width: 65%;
+  padding-top: 7px;
   border: none;
   border-bottom: 1px solid grey;
-  width: 65%;
 }
 
-.title h3 {
-  font-size: 2.7em;
+.card_title h3 {
   font-size: 1.6em;
   line-height: 1.2;
   color: grey;
 }
 
-article span {
-  font-size: 0.9em;
+.card_details {
+  padding: 12px 0 5px;
 }
 
-.card_container .details {
-  height: 50%;
-  display: flex;
-  justify-content: space-between;
-  padding: 15px 20px 20px;
-}
-
-.card_container .details div {
-  align-self: flex-start;
-}
-
-.card_container .details span {
+.card_details span {
   display: block;
-  word-wrap: break-word;
 }
 
-.card_container .details button {
-  align-self: flex-end;
-  padding: 5px 15px 3px;
-  border: none;
-  border-radius: 10px;
+.card_actions {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.card_actions button {
   border: 1px solid orange;
   background-color: #fff;
-  color: black;
+  color: grey;
 }
 
-.card_container .details button:hover {
+.card_actions button:hover {
   background-color: orange;
   color: #fff;
   cursor: pointer;
 }
 
-.sec_action {
-  position: absolute;
-  bottom: 27%;
-  right: 15px;
-  border: none !important;
-  color: orange !important;
+.card_actions .card__action_secondary {
+  border: none;
+  color: orange;
+  transform: translateY(1px);
 }
 
-.sec_action:hover {
-  background-color: transparent !important;
-  color: grey !important;
+.card_actions .card__action_secondary:hover {
+  background-color: transparent;
+  color: grey;
 }
 
 p {

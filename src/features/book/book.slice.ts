@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import type { InitialStateType, BookType } from '../../utils/types'
+import type { InitialStateType, BookType, QueryType } from '../../utils/types'
 import BookService from '../../services/book.service'
 
 const initialState: InitialStateType = {
@@ -13,25 +13,28 @@ const bookSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAllBooks.pending, (state) => {
+    builder.addCase(fetchBooks.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(fetchAllBooks.fulfilled, (state, action) => {
+    builder.addCase(fetchBooks.fulfilled, (state, action) => {
       state.isLoading = false
       state.data = action.payload
       state.error = null
     })
-    builder.addCase(fetchAllBooks.rejected, (state, action) => {
+    builder.addCase(fetchBooks.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.error.message
     })
   }
 })
 
-export const fetchAllBooks = createAsyncThunk('allBooks/fetch', async () => {
-  const res = await BookService.getAllBooks()
-  return res.data
-})
+export const fetchBooks = createAsyncThunk(
+  'books/fetch',
+  async (data: QueryType) => {
+    const res = await BookService.getBooks(data)
+    return res.data
+  }
+)
 
 export const addBook = createAsyncThunk('book/add', async (data: BookType) => {
   const res = await BookService.createBook(data)
@@ -39,7 +42,7 @@ export const addBook = createAsyncThunk('book/add', async (data: BookType) => {
 })
 
 export const updateBook = createAsyncThunk(
-  'member/update',
+  'book/update',
   async (data: BookType) => {
     const res = await BookService.updateBook(data)
     return res.data

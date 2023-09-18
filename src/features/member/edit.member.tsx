@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAppDispatch } from '../../hooks'
-import { fetchAllMembers, updateMember, deleteMember } from './member.slice'
+import { updateMember, deleteMember } from './member.slice'
 import type { MemberType } from '../../utils/types'
 
 export const EditMember = ({ setDisplay, selectedMember }) => {
@@ -19,7 +19,6 @@ export const EditMember = ({ setDisplay, selectedMember }) => {
       .then((res) => {
         alert('Updated!')
         if (res === 'OK') setDisplay('read')
-        dispatch(fetchAllMembers())
       })
     e.preventDefault()
   }
@@ -30,7 +29,6 @@ export const EditMember = ({ setDisplay, selectedMember }) => {
       .then((res) => {
         alert('Deleted!')
         if (res === 'OK') setDisplay('read')
-        dispatch(fetchAllMembers())
       })
   }
 
@@ -38,40 +36,41 @@ export const EditMember = ({ setDisplay, selectedMember }) => {
     <>
       <form onSubmit={handleSubmit}>
         <label>
-          Title:
-          <input
-            name='title'
-            placeholder='Title'
-            defaultValue={selectedMember.title}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Author:
-          <input
-            name='author'
-            placeholder='Author'
-            defaultValue={selectedMember.author}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Quantity:
+          National ID
           <input
             type='number'
-            name='quantity'
-            placeholder='Quantity'
-            defaultValue={selectedMember.quantity}
+            name='nationalId'
+            placeholder='National ID'
+            defaultValue={selectedMember.nationalId}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          First name
+          <input
+            name='firstName'
+            placeholder='First name'
+            defaultValue={selectedMember.firstName}
             onChange={handleChange}
           />
         </label>
         <label>
-          Fees:
+          Last name
           <input
-            type='number'
-            name='fee'
-            placeholder='Fee'
-            defaultValue={selectedMember.fee}
+            name='lastName'
+            placeholder='Last name'
+            defaultValue={selectedMember.lastName}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Email
+          <input
+            type='email'
+            name='email'
+            placeholder='Email'
+            defaultValue={selectedMember.email}
             onChange={handleChange}
           />
         </label>
