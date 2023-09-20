@@ -25,6 +25,39 @@ const bookSlice = createSlice({
       state.isLoading = false
       state.error = action.error.message
     })
+    builder.addCase(fetchBook.pending, (state) => {
+      state.isLoading = true
+    })
+    builder.addCase(fetchBook.fulfilled, (state) => {
+      state.isLoading = false
+      state.error = null
+    })
+    builder.addCase(fetchBook.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.error.message
+    })
+    builder.addCase(addBook.pending, (state) => {
+      state.isLoading = true
+    })
+    builder.addCase(addBook.fulfilled, (state) => {
+      state.isLoading = false
+      state.error = null
+    })
+    builder.addCase(addBook.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.error.message
+    })
+    builder.addCase(updateBook.pending, (state) => {
+      state.isLoading = true
+    })
+    builder.addCase(updateBook.fulfilled, (state) => {
+      state.isLoading = false
+      state.error = null
+    })
+    builder.addCase(updateBook.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.error.message
+    })
   }
 })
 
@@ -32,6 +65,14 @@ export const fetchBooks = createAsyncThunk(
   'books/fetch',
   async (data: QueryType) => {
     const res = await BookService.getBooks(data)
+    return res.data
+  }
+)
+
+export const fetchBook = createAsyncThunk(
+  'book/fetch',
+  async (data: number) => {
+    const res = await BookService.getBook(data)
     return res.data
   }
 )
@@ -50,7 +91,7 @@ export const updateBook = createAsyncThunk(
 )
 
 export const deleteBook = createAsyncThunk(
-  'member/update',
+  'book/delete',
   async (data: BookType) => {
     const res = await BookService.deleteBook(data)
     return res.data

@@ -17,31 +17,34 @@ export const RenderBooks = ({ setDisplay, setSelectedBook }) => {
   }
 
   const issueBook = (isbn: number) => {
-    navigate(`/issues?isbn=${isbn}&newIssue=true`)
+    navigate(`/issues?isbn=${isbn}&new=true`)
   }
 
   return (
     <>
       {isLoading && <div>Loading...</div>}
       {!isLoading && books && (
-        <section className='card_container'>
-          {books.map((book: BookType) => (
-            <Card
-              key={book.isbn}
-              id={book.isbn}
-              title={book.title}
-              subtitle={book.author}
-              details={[
-                { name: 'ISBN', content: book.isbn },
-                { name: 'Quantity', content: book.quantity }
-              ]}
-              primaryAction={issueBook}
-              actionText='Issue'
-              secondaryAction={updateBook}
-              actionTextSecondary='Edit'
-            />
-          ))}
-        </section>
+        <>
+          <section className='card_container'>
+            {books.map((book: BookType) => (
+              <Card
+                key={book.isbn}
+                id={book.isbn}
+                title={book.title}
+                subtitle={book.author}
+                details={[
+                  { name: 'ISBN', content: book.isbn },
+                  { name: 'Quantity', content: book.quantity }
+                ]}
+                primaryAction={issueBook}
+                actionText='Issue'
+                secondaryAction={updateBook}
+                actionTextSecondary='Edit'
+              />
+            ))}
+          </section>
+          {!books.length && <div>No results found!</div>}
+        </>
       )}
       {!isLoading && error && (
         <div>Error: {error.message ?? 'Error loading content'}</div>

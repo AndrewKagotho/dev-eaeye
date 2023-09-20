@@ -5,6 +5,10 @@ const getMembers = ({ type, item }: QueryType) => {
   return api.get(`/members?type=${type}&item=${item}`)
 }
 
+const getMember = (nationalId: number) => {
+  return api.get(`/members/${nationalId}`)
+}
+
 const createMember = (data: MemberType) => {
   return api.post('/members', data)
 }
@@ -19,6 +23,7 @@ const deleteMember = ({ nationalId }: MemberType) => {
 
 const MemberService = {
   getMembers,
+  getMember,
   createMember,
   updateMember,
   deleteMember

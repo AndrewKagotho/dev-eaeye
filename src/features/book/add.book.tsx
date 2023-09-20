@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { useAppDispatch } from '../../hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import { addBook } from './book.slice'
 import type { BookType } from '../../utils/types'
 
 export const AddBook = ({ setDisplay }) => {
   const dispatch = useAppDispatch()
+  const bookState = useAppSelector((state) => state.book)
+  const isLoading = bookState.isLoading
   const [newBook, setNewBook] = useState({} as BookType)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,9 +16,9 @@ export const AddBook = ({ setDisplay }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     dispatch(addBook(newBook))
       .unwrap()
-      .then((res) => {
-        alert('Created!')
-        if (res === 'Created') setDisplay('read')
+      .then(() => {
+        alert('Book added!')
+        setDisplay('read')
       })
     e.preventDefault()
   }
@@ -29,28 +31,17 @@ export const AddBook = ({ setDisplay }) => {
           type='number'
           name='isbn'
           placeholder='ISBN'
-          value={newBook.isbn}
           onChange={handleChange}
           required
         />
       </label>
       <label>
         Title:
-        <input
-          name='title'
-          placeholder='Title'
-          value={newBook.title}
-          onChange={handleChange}
-        />
+        <input name='title' placeholder='Title' onChange={handleChange} />
       </label>
       <label>
         Author:
-        <input
-          name='author'
-          placeholder='Author'
-          value={newBook.author}
-          onChange={handleChange}
-        />
+        <input name='author' placeholder='Author' onChange={handleChange} />
       </label>
       <label>
         Quantity:
@@ -58,7 +49,6 @@ export const AddBook = ({ setDisplay }) => {
           type='number'
           name='quantity'
           placeholder='Quantity'
-          value={newBook.quantity}
           onChange={handleChange}
         />
       </label>
@@ -68,11 +58,10 @@ export const AddBook = ({ setDisplay }) => {
           type='number'
           name='fee'
           placeholder='Fee'
-          value={newBook.fee}
           onChange={handleChange}
         />
       </label>
-      <button type='submit'>Add</button>
+      <button type='submit'>{isLoading ? 'Please wait...' : 'Add'}</button>
     </form>
   )
 }

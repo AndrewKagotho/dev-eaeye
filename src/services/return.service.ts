@@ -1,8 +1,8 @@
 import api from '../utils/libs/axios.lib'
-import type { ReturnType } from '../utils/types'
+import type { ReturnType, QueryType } from '../utils/types'
 
-const getAllReturns = () => {
-  return api('/returns')
+const getReturns = ({ type, item }: QueryType) => {
+  return api.get(`/returns?type=${type}&item=${item}`)
 }
 
 const createReturn = (data: ReturnType) => {
@@ -10,7 +10,7 @@ const createReturn = (data: ReturnType) => {
 }
 
 const ReturnService = {
-  getAllReturns,
+  getReturns,
   createReturn
 }
 

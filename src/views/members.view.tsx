@@ -19,14 +19,9 @@ export const Members = () => {
   const itemParam = searchParams.get('item')
 
   useEffect(() => {
-    dispatch(
-      fetchMembers({
-        type: typeParam as 'title' | 'isbn' | 'author',
-        item: itemParam
-      })
-    )
+    dispatch(fetchMembers({ type: typeParam, item: itemParam }))
     // eslint-disable-next-line
-  }, [typeParam, itemParam])
+  }, [typeParam, itemParam, display === 'read'])
 
   return (
     <>
@@ -51,7 +46,7 @@ export const Members = () => {
           description='Provide member details.'
           MainComponent={<AddMember setDisplay={setDisplay} />}
           action={() => setDisplay('read')}
-          actionText='Minimize'
+          actionText='Close'
         />
       )}
       {display === 'update' && (
@@ -65,7 +60,7 @@ export const Members = () => {
             />
           }
           action={() => setDisplay('read')}
-          actionText='Minimize'
+          actionText='Close'
         />
       )}
     </>

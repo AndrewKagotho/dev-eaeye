@@ -24,9 +24,11 @@ export const Card = ({
       <div className='card_details'>
         {details.map((detail, index) => {
           let context = detail.name === 'Quantity' ? 'books' : ''
+          let prefix =
+            detail.name === 'Daily fee' || detail.name === 'Pay' ? 'KSH' : ''
           return (
             <span key={index}>
-              {detail.name}: {detail.content} {context}
+              {detail.name}: {prefix} {detail.content} {context}
             </span>
           )
         })}

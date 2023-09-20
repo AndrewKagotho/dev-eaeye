@@ -19,14 +19,9 @@ export const Books = () => {
   const itemParam = searchParams.get('item')
 
   useEffect(() => {
-    dispatch(
-      fetchBooks({
-        type: typeParam as 'title' | 'isbn' | 'author',
-        item: itemParam
-      })
-    )
+    dispatch(fetchBooks({ type: typeParam, item: itemParam }))
     // eslint-disable-next-line
-  }, [typeParam, itemParam])
+  }, [typeParam, itemParam, display === 'read'])
 
   return (
     <>
@@ -51,7 +46,7 @@ export const Books = () => {
           description='Provide book details.'
           MainComponent={<AddBook setDisplay={setDisplay} />}
           action={() => setDisplay('read')}
-          actionText='Minimize'
+          actionText='Close'
         />
       )}
       {display === 'update' && (
@@ -62,7 +57,7 @@ export const Books = () => {
             <EditBook setDisplay={setDisplay} selectedBook={selectedBook} />
           }
           action={() => setDisplay('read')}
-          actionText='Minimize'
+          actionText='Close'
         />
       )}
     </>

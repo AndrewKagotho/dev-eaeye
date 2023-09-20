@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { QueryType } from '../../utils/types'
 
 export const Search = ({ setSearchParams }) => {
-  const [query, setQuery] = useState({ type: 'issueId' } as QueryType)
+  const [query, setQuery] = useState({ type: 'returnId' } as QueryType)
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -19,7 +19,7 @@ export const Search = ({ setSearchParams }) => {
     <form className='form_search' onSubmit={handleSubmit}>
       <input
         type='search'
-        placeholder='Search Issue ID, National ID, ISBN...'
+        placeholder='Search return ID, issue ID...'
         name='item'
         onChange={handleChange}
       />
@@ -28,9 +28,8 @@ export const Search = ({ setSearchParams }) => {
         name='type'
         value={query.type}
         onChange={handleChange}>
-        <option value='issueId'>Issue ID</option>
-        <option value='memberNationalId'>Member National ID</option>
-        <option value='bookIsbn'>Book ISBN</option>
+        <option value='returnId'>Return ID</option>
+        <option value='issueIssueId'>Issue ID</option>
       </select>
       <button type='submit'>Go</button>
     </form>

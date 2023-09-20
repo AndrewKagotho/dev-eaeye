@@ -2,7 +2,11 @@ import api from '../utils/libs/axios.lib'
 import type { BookType, QueryType } from '../utils/types'
 
 const getBooks = ({ type, item }: QueryType) => {
-  return api.get(`/books?type=${type}&item=${item}`)
+  return api(`/books?type=${type}&item=${item}`)
+}
+
+const getBook = (isbn: number) => {
+  return api(`/books/${isbn}`)
 }
 
 const createBook = (data: BookType) => {
@@ -19,6 +23,7 @@ const deleteBook = ({ isbn }: BookType) => {
 
 const BookService = {
   getBooks,
+  getBook,
   createBook,
   updateBook,
   deleteBook

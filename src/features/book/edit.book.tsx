@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { useAppDispatch } from '../../hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import { updateBook, deleteBook } from './book.slice'
 import type { BookType } from '../../utils/types'
 
 export const EditBook = ({ setDisplay, selectedBook }) => {
   const dispatch = useAppDispatch()
+  const bookState = useAppSelector((state) => state.book)
+  const isLoading = bookState.isLoading
   const [bookUpdates, setBookUpdates] = useState({
     isbn: selectedBook.isbn
   } as BookType)
@@ -16,20 +18,22 @@ export const EditBook = ({ setDisplay, selectedBook }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     dispatch(updateBook(bookUpdates))
       .unwrap()
-      .then((res) => {
-        alert('Updated!')
-        if (res === 'OK') setDisplay('read')
+      .then(() => {
+        alert('Book updated!')
+        setDisplay('read')
       })
     e.preventDefault()
   }
 
   const handleDelete = () => {
-    dispatch(deleteBook(bookUpdates))
-      .unwrap()
-      .then((res) => {
-        alert('Deleted!')
-        if (res === 'OK') setDisplay('read')
-      })
+    if (window.confirm('Are you sure you want to delete?')) {
+      dispatch(deleteBook(bookUpdates))
+        .unwrap()
+        .then(() => {
+          alert('Book deleted!')
+          setDisplay('read')
+        })
+    }
   }
 
   return (
@@ -73,12 +77,11 @@ export const EditBook = ({ setDisplay, selectedBook }) => {
             onChange={handleChange}
           />
         </label>
-        <button type='submit'>Update</button>
+        <button type='submit'>{isLoading ? 'Please wait...' : 'Update'}</button>
       </form>
-      <div className='edit_actions'>
-        <button onClick={handleDelete}>Delete book</button>
-        <button onClick={() => setDisplay('read')}>Close</button>
-      </div>
+      <button id='delete_action' onClick={handleDelete}>
+        Delete book
+      </button>
     </>
   )
 }

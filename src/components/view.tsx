@@ -17,9 +17,11 @@ export const View = ({
       <div className='main__content'>
         <p>{description}</p>
         {MainComponent}
-        <button className='toggleForm' onClick={action}>
-          {actionText}
-        </button>
+        {action && (
+          <button className='toggleForm' onClick={action}>
+            {actionText}
+          </button>
+        )}
       </div>
     </>
   )

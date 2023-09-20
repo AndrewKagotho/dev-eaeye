@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { useAppDispatch } from '../../hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import { updateMember, deleteMember } from './member.slice'
 import type { MemberType } from '../../utils/types'
 
 export const EditMember = ({ setDisplay, selectedMember }) => {
   const dispatch = useAppDispatch()
+  const memberState = useAppSelector((state) => state.member)
+  const isLoading = memberState.isLoading
   const [memberUpdates, setMemberUpdates] = useState({
     nationalId: selectedMember.nationalId
   } as MemberType)
@@ -16,20 +18,22 @@ export const EditMember = ({ setDisplay, selectedMember }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     dispatch(updateMember(memberUpdates))
       .unwrap()
-      .then((res) => {
-        alert('Updated!')
-        if (res === 'OK') setDisplay('read')
+      .then(() => {
+        alert('Member updated!')
+        setDisplay('read')
       })
     e.preventDefault()
   }
 
   const handleDelete = () => {
-    dispatch(deleteMember(memberUpdates))
-      .unwrap()
-      .then((res) => {
-        alert('Deleted!')
-        if (res === 'OK') setDisplay('read')
-      })
+    if (window.confirm('Are you sure you want to delete?')) {
+      dispatch(deleteMember(memberUpdates))
+        .unwrap()
+        .then(() => {
+          alert('Member deleted!')
+          setDisplay('read')
+        })
+    }
   }
 
   return (
@@ -74,12 +78,11 @@ export const EditMember = ({ setDisplay, selectedMember }) => {
             onChange={handleChange}
           />
         </label>
-        <button type='submit'>Update</button>
+        <button type='submit'>{isLoading ? 'Please wait...' : 'Update'}</button>
       </form>
-      <div className='edit_actions'>
-        <button onClick={handleDelete}>Delete book</button>
-        <button onClick={() => setDisplay('read')}>Close</button>
-      </div>
+      <button id='delete_action' onClick={handleDelete}>
+        Delete member
+      </button>
     </>
   )
 }

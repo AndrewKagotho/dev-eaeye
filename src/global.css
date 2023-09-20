@@ -1,6 +1,9 @@
-/* CSS Reset */
+/* Fonts */
 
 @import url('https://fonts.googleapis.com/css2?family=Khula:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap');
+
+/* CSS Reset */
 
 html,
 body,
@@ -169,11 +172,14 @@ body {
   overflow-x: hidden;
 }
 
-/* Elements */
-
+/* Body elements */
 h2 {
   font-size: 1.8em;
   font-weight: 300;
+}
+
+p {
+  margin-bottom: 15px;
 }
 
 form {
@@ -217,6 +223,10 @@ button:hover {
   cursor: pointer;
 }
 
+a {
+  text-decoration: none;
+}
+
 .view {
   width: 100vw;
   height: 100vh;
@@ -235,10 +245,20 @@ button:hover {
 }
 
 .view__banner h1 {
+  font-family: 'Nunito Sans';
+  letter-spacing: 2px;
   align-self: center;
   text-transform: uppercase;
-  font-size: 2.5em;
+  font-size: 2.3em;
   font-weight: 600;
+}
+
+.view__banner a {
+  color: orange;
+}
+
+.view__banner a:hover {
+  color: darkorange;
 }
 
 .view__content {
@@ -262,7 +282,6 @@ nav {
 }
 
 nav a {
-  text-decoration: none;
   color: grey;
 }
 
@@ -279,6 +298,7 @@ nav a:hover {
 main {
   width: 87%;
   overflow-y: auto;
+  padding-bottom: 10vh;
 }
 
 .main__banner {
@@ -286,12 +306,9 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px 10px;
-}
-
-.main__banner h2 {
-  background-color: white;
   position: sticky;
   top: 0;
+  background-color: white;
   z-index: 10;
 }
 
@@ -339,7 +356,6 @@ select:focus {
 
 .main__content {
   padding: 0 50px;
-  margin-bottom: 10vh;
 }
 
 .card_container {
@@ -351,7 +367,7 @@ select:focus {
 
 .container__alt {
   align-items: center;
-  gap: 0;
+  column-gap: 0;
   margin-bottom: 5vh;
 }
 
@@ -369,12 +385,46 @@ select:focus {
   align-items: flex-start;
 }
 
+.container__alt > div button {
+  background-color: white;
+  border: 1px solid grey;
+  color: grey;
+}
+
+.container__alt > div button:hover {
+  border: 1px solid orange;
+  color: orange;
+}
+
 .container__alt:hover article {
   border: 1px solid orange;
 }
 
 .container__alt:hover > hr {
   border-top: 1px solid orange;
+}
+
+.view_calculation {
+  width: 15vw;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  place-content: center;
+}
+
+.view_calculation > span {
+  padding: 5px 0;
+}
+
+.view_calculation button {
+  margin-top: 3vh;
+  background-color: white;
+  border: 1px solid grey;
+  color: grey;
+}
+
+.view_calculation button:hover {
+  border: 1px solid orange;
+  color: orange;
 }
 
 .issue_members button {
@@ -388,10 +438,6 @@ article {
   border: 1px solid grey;
 }
 
-.fitContent {
-  /* height: 170px; */
-}
-
 article:hover {
   border: 1px solid orange;
 }
@@ -402,10 +448,6 @@ article:hover h3 {
 
 article span {
   font-size: 0.9em;
-}
-
-article > * {
-  /* border: 1px solid red; */
 }
 
 .card_title {
@@ -445,7 +487,7 @@ article > * {
 
 .card_actions button {
   border: 1px solid orange;
-  background-color: #fff;
+  background-color: white;
   color: grey;
 }
 
@@ -466,25 +508,15 @@ article > * {
   color: grey;
 }
 
-p {
-  margin-bottom: 15px;
-}
-
 .toggleForm {
   position: absolute;
   bottom: 30px;
   right: 30px;
 }
 
-.edit_actions {
-  width: 25%;
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  bottom: 30px;
-}
-
-.edit_actions button:first-child {
-  width: 70%;
-  background-color: red;
+#delete_action {
+  margin-top: 5vh;
+  border: 1px solid red;
+  background-color: white;
+  color: red;
 }

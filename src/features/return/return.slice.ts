@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import type { InitialStateType, ReturnType } from '../../utils/types'
+import type { InitialStateType, ReturnType, QueryType } from '../../utils/types'
 import ReturnService from '../../services/return.service'
 
 const initialState: InitialStateType = {
@@ -13,25 +13,36 @@ const issueSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAllReturns.pending, (state) => {
+    builder.addCase(fetchReturns.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(fetchAllReturns.fulfilled, (state, action) => {
+    builder.addCase(fetchReturns.fulfilled, (state, action) => {
       state.isLoading = false
       state.data = action.payload
       state.error = null
     })
-    builder.addCase(fetchAllReturns.rejected, (state, action) => {
+    builder.addCase(fetchReturns.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.error.message
+    })
+    builder.addCase(addReturn.pending, (state) => {
+      state.isLoading = true
+    })
+    builder.addCase(addReturn.fulfilled, (state) => {
+      state.isLoading = false
+      state.error = null
+    })
+    builder.addCase(addReturn.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.error.message
     })
   }
 })
 
-export const fetchAllReturns = createAsyncThunk(
+export const fetchReturns = createAsyncThunk(
   'allReturns/fetch',
-  async () => {
-    const res = await ReturnService.getAllReturns()
+  async (data: QueryType) => {
+    const res = await ReturnService.getReturns(data)
     return res.data
   }
 )

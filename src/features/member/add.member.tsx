@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { useAppDispatch } from '../../hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import { addMember } from './member.slice'
 import type { MemberType } from '../../utils/types'
 
 export const AddMember = ({ setDisplay }) => {
   const dispatch = useAppDispatch()
+  const memberState = useAppSelector((state) => state.member)
+  const isLoading = memberState.isLoading
   const [newMember, setNewMember] = useState({} as MemberType)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,9 +16,9 @@ export const AddMember = ({ setDisplay }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     dispatch(addMember(newMember))
       .unwrap()
-      .then((res) => {
-        alert('Created!')
-        if (res === 'Created') setDisplay('read')
+      .then(() => {
+        alert('Member added!')
+        setDisplay('read')
       })
     e.preventDefault()
   }
@@ -29,7 +31,6 @@ export const AddMember = ({ setDisplay }) => {
           type='number'
           name='nationalId'
           placeholder='National ID'
-          value={newMember.nationalId}
           onChange={handleChange}
           required
         />
@@ -39,7 +40,6 @@ export const AddMember = ({ setDisplay }) => {
         <input
           name='firstName'
           placeholder='First name'
-          value={newMember.firstName}
           onChange={handleChange}
         />
       </label>
@@ -48,7 +48,6 @@ export const AddMember = ({ setDisplay }) => {
         <input
           name='lastName'
           placeholder='Last name'
-          value={newMember.lastName}
           onChange={handleChange}
         />
       </label>
@@ -58,11 +57,10 @@ export const AddMember = ({ setDisplay }) => {
           type='email'
           name='email'
           placeholder='Email'
-          value={newMember.email}
           onChange={handleChange}
         />
       </label>
-      <button type='submit'>Add</button>
+      <button type='submit'>{isLoading ? 'Please wait...' : 'Add'}</button>
     </form>
   )
 }

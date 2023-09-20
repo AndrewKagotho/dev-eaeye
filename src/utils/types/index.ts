@@ -30,45 +30,13 @@ export type IssueType = {
 }
 
 export type ReturnType = {
-  returnId: number
+  returnId?: number
   pay: number
-  issueIssueId: number
-  createdAt: any
-}
-
-export type SelectedBookType = {
-  isBookFormOpen: boolean
-} & BookType
-
-export type SelectedMemberType = {
-  isMemberFormOpen: boolean
-} & MemberType
-
-export type SelectedIssueType = {
-  isIssueFormOpen: boolean
-}
-
-export type ContextType = {
-  book: {
-    selectedBook: SelectedBookType
-    setSelectedBook: React.Dispatch<React.SetStateAction<SelectedBookType>>
-  }
-  member: {
-    selectedMember: SelectedMemberType
-    setSelectedMember: React.Dispatch<React.SetStateAction<SelectedMemberType>>
-  }
-  issue: {
-    selectedIssue: SelectedIssueType
-    setSelectedIssue: React.Dispatch<React.SetStateAction<SelectedIssueType>>
-  }
-  editBook: {
-    editBook: boolean
-    setEditBook: React.Dispatch<React.SetStateAction<boolean>>
-  }
-  editMember: {
-    editMember: boolean
-    setEditMember: React.Dispatch<React.SetStateAction<boolean>>
-  }
+  issueId: number
+  bookIsbn: number
+  memberNationalId: number
+  issuedDate: string
+  returnDate?: string
 }
 
 export type ContextProviderProps = {
@@ -92,13 +60,13 @@ export type ViewType = {
   description: string
   SearchComponent?: React.ReactNode
   MainComponent: React.ReactNode
-  action: React.MouseEventHandler<HTMLButtonElement>
-  actionText: string
+  action?: React.MouseEventHandler<HTMLButtonElement>
+  actionText?: string
 }
 
-export type DisplayType = 'create' | 'read' | 'update' | 'delete'
+export type DisplayType = 'create' | 'read' | 'update'
 
 export type QueryType = {
-  type: 'isbn' | 'title' | 'author' | 'nationalId' | 'firstName' | 'lastName'
+  type: string
   item: string
 }

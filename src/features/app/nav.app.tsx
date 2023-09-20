@@ -5,7 +5,9 @@ export const Nav = () => {
     <>
       <div className='view'>
         <div className='view__banner'>
-          <h1>Library Management System</h1>
+          <h1>
+            <NavLink to='/'>Library Management System</NavLink>
+          </h1>
         </div>
         <div className='view__content'>
           <nav>
