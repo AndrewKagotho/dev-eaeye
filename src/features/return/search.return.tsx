@@ -29,7 +29,7 @@ export const Search = ({ setSearchParams }) => {
         value={query.type}
         onChange={handleChange}>
         <option value='returnId'>Return ID</option>
-        <option value='issueIssueId'>Issue ID</option>
+        <option value='issueId'>Issue ID</option>
       </select>
       <button type='submit'>Go</button>
     </form>

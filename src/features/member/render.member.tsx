@@ -12,7 +12,7 @@ export const RenderMembers = ({
   const members = memberState.data
   const error = memberState.error
 
-  const updateMember = (nationalId: number) => {
+  const handleUpdate = (nationalId: number) => {
     const object = members.find(
       ({ nationalId: memberNationalId }) => memberNationalId === nationalId
     )
@@ -36,8 +36,10 @@ export const RenderMembers = ({
                   { name: 'National ID', content: member.nationalId },
                   { name: 'Email', content: member.email }
                 ]}
-                primaryAction={updateMember}
-                actionText={select ? 'Select' : 'Edit'}
+                primaryAction={{
+                  handler: handleUpdate,
+                  text: select ? 'Select' : 'Edit'
+                }}
               />
             ))}
           </section>

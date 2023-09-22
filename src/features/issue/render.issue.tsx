@@ -11,7 +11,7 @@ export const RenderIssues = () => {
   const issues = issueState.data
   const error = issueState.error
 
-  const returnBook = (isbn: number) => {
+  const handleReturn = (isbn: number) => {
     navigate(`/returns?issueId=${isbn}&new=true`)
   }
 
@@ -32,8 +32,7 @@ export const RenderIssues = () => {
                   { name: 'ISBN', content: issue.bookIsbn },
                   { name: 'Issued on', content: parseDate(issue.createdAt) }
                 ]}
-                primaryAction={returnBook}
-                actionText='Return'
+                primaryAction={{ handler: handleReturn, text: 'Return' }}
               />
             ))}
           </section>

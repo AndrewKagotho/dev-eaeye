@@ -72,8 +72,7 @@ export const AddIssue = ({ setDisplay }) => {
             select
           />
         }
-        action={() => navigate('/')}
-        actionText='Discard'
+        action={{ handler: () => navigate('/'), text: 'Discard' }}
       />
     </>
   )

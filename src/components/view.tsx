@@ -5,8 +5,7 @@ export const View = ({
   description,
   SearchComponent,
   MainComponent,
-  action,
-  actionText
+  action
 }: ViewType) => {
   return (
     <>
@@ -18,8 +17,8 @@ export const View = ({
         <p>{description}</p>
         {MainComponent}
         {action && (
-          <button className='toggleForm' onClick={action}>
-            {actionText}
+          <button className='toggleForm' onClick={action.handler}>
+            {action.text}
           </button>
         )}
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks'
 import { View } from '../../components/view'
 import { fetchIssue } from '../issue/issue.slice'
@@ -11,6 +11,7 @@ import type { BookType, MemberType, IssueType } from '../../utils/types'
 import moment from 'moment'
 
 export const AddReturn = ({ setDisplay }) => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [selectedBook, setSelectedBook] = useState({} as BookType)
   const [selectedMember, setSelectedMember] = useState<MemberType | null>(null)
@@ -74,6 +75,7 @@ export const AddReturn = ({ setDisplay }) => {
             returnSummary={returnSummary}
           />
         }
+        action={{ handler: () => navigate('/issues'), text: 'Discard' }}
       />
     </>
   )

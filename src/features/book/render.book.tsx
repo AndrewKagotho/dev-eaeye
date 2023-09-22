@@ -10,13 +10,13 @@ export const RenderBooks = ({ setDisplay, setSelectedBook }) => {
   const books = bookState.data
   const error = bookState.error
 
-  const updateBook = (isbn: number) => {
+  const handleUpdate = (isbn: number) => {
     const object = books.find(({ isbn: bookIsbn }) => bookIsbn === isbn)
     setSelectedBook(object)
     setDisplay('update')
   }
 
-  const issueBook = (isbn: number) => {
+  const handleIssue = (isbn: number) => {
     navigate(`/issues?isbn=${isbn}&new=true`)
   }
 
@@ -36,10 +36,8 @@ export const RenderBooks = ({ setDisplay, setSelectedBook }) => {
                   { name: 'ISBN', content: book.isbn },
                   { name: 'Quantity', content: book.quantity }
                 ]}
-                primaryAction={issueBook}
-                actionText='Issue'
-                secondaryAction={updateBook}
-                actionTextSecondary='Edit'
+                primaryAction={{ handler: handleIssue, text: 'Issue' }}
+                secondaryAction={{ handler: handleUpdate, text: 'Edit' }}
               />
             ))}
           </section>

@@ -162,17 +162,18 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+/* Elements */
+
 body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
   font-family: 'Khula';
-  line-height: 1.8;
-  font-size: 14px;
   font-weight: 400;
+  line-height: 1.8;
+  background-color: white;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Body elements */
 h2 {
   font-size: 1.8em;
   font-weight: 300;
@@ -206,6 +207,12 @@ input:focus {
   border: 1px solid orange;
 }
 
+input,
+select {
+  background-color: white;
+  color: grey;
+}
+
 form button {
   margin-top: 15px;
 }
@@ -215,7 +222,7 @@ button {
   border: none;
   border-radius: 10px;
   background-color: orange;
-  color: #fff;
+  color: white;
 }
 
 button:hover {
@@ -432,7 +439,7 @@ select:focus {
 }
 
 article {
-  width: 225px;
+  width: 245px;
   padding: 20px;
   border-radius: 10px;
   border: 1px solid grey;

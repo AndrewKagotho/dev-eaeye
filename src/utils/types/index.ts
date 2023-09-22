@@ -4,7 +4,7 @@ type AppState = {
 }
 
 export type InitialStateType = {
-  data: []
+  data: [] | null
 } & AppState
 
 export type BookType = {
@@ -48,11 +48,8 @@ export type CardType = {
   title: string | number
   subtitle: string | number
   details: { name: string; content: string | number }[]
-  primaryAction?: (id: number) => void
-  actionText?: string
-  secondaryAction?: (id: number) => void
-  actionTextSecondary?: string
-  fitContent?: boolean
+  primaryAction?: { handler: (id: number) => void; text: string }
+  secondaryAction?: { handler: (id: number) => void; text: string }
 }
 
 export type ViewType = {
@@ -60,8 +57,10 @@ export type ViewType = {
   description: string
   SearchComponent?: React.ReactNode
   MainComponent: React.ReactNode
-  action?: React.MouseEventHandler<HTMLButtonElement>
-  actionText?: string
+  action?: {
+    handler: React.MouseEventHandler<HTMLButtonElement>
+    text: string
+  }
 }
 
 export type DisplayType = 'create' | 'read' | 'update'

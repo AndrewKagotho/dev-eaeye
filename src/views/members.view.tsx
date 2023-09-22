@@ -36,8 +36,7 @@ export const Members = () => {
               setSelectedMember={setSelectedMember}
             />
           }
-          action={() => setDisplay('create')}
-          actionText='Add member'
+          action={{ handler: () => setDisplay('create'), text: 'Add member' }}
         />
       )}
       {display === 'create' && (
@@ -45,8 +44,7 @@ export const Members = () => {
           header='New member'
           description='Provide member details.'
           MainComponent={<AddMember setDisplay={setDisplay} />}
-          action={() => setDisplay('read')}
-          actionText='Close'
+          action={{ handler: () => setDisplay('read'), text: 'Close' }}
         />
       )}
       {display === 'update' && (
@@ -59,8 +57,7 @@ export const Members = () => {
               selectedMember={selectedMember}
             />
           }
-          action={() => setDisplay('read')}
-          actionText='Close'
+          action={{ handler: () => setDisplay('read'), text: 'Close' }}
         />
       )}
     </>

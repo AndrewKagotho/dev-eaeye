@@ -4,7 +4,7 @@ import ReturnService from '../../services/return.service'
 
 const initialState: InitialStateType = {
   isLoading: false,
-  data: [],
+  data: null,
   error: null
 }
 

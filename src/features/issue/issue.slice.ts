@@ -4,7 +4,7 @@ import IssueService from '../../services/issue.service'
 
 const initialState: InitialStateType = {
   isLoading: false,
-  data: [],
+  data: null,
   error: null
 }
 

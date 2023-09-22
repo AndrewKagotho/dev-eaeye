@@ -1,7 +1,6 @@
 {
-  "name": "library-system-crud",
+  "name": "dev-eaeye",
   "version": "0.1.0",
-  "homepage": "https://andrewkagotho.github.io/library-system-crud",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -20,13 +19,10 @@
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
-    "sass": "^1.66.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -49,8 +45,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^6.0.0"
   }
 }

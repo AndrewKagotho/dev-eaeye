@@ -5,15 +5,11 @@ export const Card = ({
   title,
   subtitle,
   details,
-  actionText,
-  actionTextSecondary,
-  primaryAction: handlePrimaryClick,
-  secondaryAction: handleSecondaryClick,
-  fitContent
+  primaryAction,
+  secondaryAction
 }: CardType) => {
-  const CSS = fitContent ? 'fitContent' : ''
   return (
-    <article className={CSS}>
+    <article>
       <div className='card_title'>
         <h3>{title}</h3>
         <div>
@@ -34,14 +30,16 @@ export const Card = ({
         })}
       </div>
       <div className='card_actions'>
-        {actionText && (
-          <button onClick={() => handlePrimaryClick(id)}>{actionText}</button>
+        {primaryAction && (
+          <button onClick={() => primaryAction.handler(id)}>
+            {primaryAction.text}
+          </button>
         )}
-        {actionTextSecondary && (
+        {secondaryAction && (
           <button
             className='card__action_secondary'
-            onClick={() => handleSecondaryClick(id)}>
-            {actionTextSecondary}
+            onClick={() => secondaryAction.handler(id)}>
+            {secondaryAction.text}
           </button>
         )}
       </div>

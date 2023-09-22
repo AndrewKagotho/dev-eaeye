@@ -4,7 +4,7 @@ import MemberService from '../../services/member.service'
 
 const initialState: InitialStateType = {
   isLoading: false,
-  data: [],
+  data: null,
   error: null
 }
 

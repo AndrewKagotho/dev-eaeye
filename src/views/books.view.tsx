@@ -36,8 +36,7 @@ export const Books = () => {
               setSelectedBook={setSelectedBook}
             />
           }
-          action={() => setDisplay('create')}
-          actionText='Add book'
+          action={{ handler: () => setDisplay('create'), text: 'Add book' }}
         />
       )}
       {display === 'create' && (
@@ -45,8 +44,7 @@ export const Books = () => {
           header='New book'
           description='Provide book details.'
           MainComponent={<AddBook setDisplay={setDisplay} />}
-          action={() => setDisplay('read')}
-          actionText='Close'
+          action={{ handler: () => setDisplay('read'), text: 'Close' }}
         />
       )}
       {display === 'update' && (
@@ -56,8 +54,7 @@ export const Books = () => {
           MainComponent={
             <EditBook setDisplay={setDisplay} selectedBook={selectedBook} />
           }
-          action={() => setDisplay('read')}
-          actionText='Close'
+          action={{ handler: () => setDisplay('read'), text: 'Close' }}
         />
       )}
     </>
