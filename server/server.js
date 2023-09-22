@@ -1,6 +1,7 @@
 const express = require('express'),
   app = express(),
   cors = require('cors'),
+  path = require('path'),
   db = require('./app/models'),
   { initializeBooks, initializeMembers } = require('./app/utils/data.init')
 
@@ -14,24 +15,26 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('./client'))
 
 try {
-  // Sync
-  db.sequelize.sync().then(() => console.log('> Sync successful!'))
-
-  // Alter sync
-  /* ;(async () => {
+  ;(async () => {
+    // Establish connection
     await db.sequelize.authenticate()
     console.log('> Connection established! \n> Syncing database...')
-    db.sequelize
-      .sync({ alter: true })
-      .then(() => console.log('Sync (alter) successful'))
-  })() */
 
-  // Force sync
-  /* db.sequelize.sync({ force: true }).then(() => {
-    console.log('> Sync (force) successful')
-    initializeBooks()
-    initializeMembers()
-  }) */
+    // Sync db
+    db.sequelize.sync().then(() => console.log('> Sync successful!'))
+
+    // Alter db
+    /* db.sequelize
+    .sync({ alter: true })
+    .then(() => console.log('Sync (alter) successful')) */
+
+    // Reset db
+    /* db.sequelize.sync({ force: true }).then(() => {
+      console.log('> Sync (force) successful')
+      initializeBooks()
+      initializeMembers()
+    }) */
+  })()
 } catch {
   console.log('Connection failed!')
 }
