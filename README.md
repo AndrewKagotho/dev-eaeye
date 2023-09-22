@@ -9,12 +9,10 @@ Given the context of its use - and the scope of the project - the LMS was design
 ## Walkthrough
 
 - Viewing books in the library inventory:
-
   <img src='./src/assets/books-desktop.jpeg' />
   - `Issue` redirects to the `Issue` page and preloads the selected book for issue
-  - `Edit` opens the book update form with a delete option
+  - `Edit` opens the book update form with an option to delete
   - Can search by title, author and ISBN
-
 - Adding a new book:
   <img src='./src/assets/book-new-desktop.jpeg' />
   - The ISBN is a required field
@@ -23,27 +21,27 @@ Given the context of its use - and the scope of the project - the LMS was design
   - The selected book's ISBN is immutable
 - Viewing members in the library registry:
   <img src='./src/assets/members-desktop.jpeg' />
-  - `Edit` opens the member update form and delete option
-  - Add/update/delete actions are similar to their equivalents in books
+  - `Edit` opens the member update form with an option to delete
+  - Add/update/delete actions are similar to those in books
   - Can search by national ID, first name and last name
 - Issuing a book:
   <img src='./src/assets/issue-book-desktop.jpeg' />
-  - The page renders with the selected book preloaded
+  - The page renders with the selected book (from the `Books` view) preloaded
   - A member can be searched for and selected from the registry
-  - Upon selection, the issue can be completed
+  - The issue can be completed upon selection
   - `Clear` deselects the selected member
-  - The book quantity is updated on submission (-1)
+  - The book quantity is updated on submission (i.e -1)
 - Viewing active book issues:
   <img src='./src/assets/issues-desktop.jpeg' />
-  - Displays only active issues. Returned books are not shown
-  - `Return` redirects to the `Returns` page and preloads the issue for return
+  - Displays only active issues (books issued and not returned)
+  - `Return` redirects to the `Returns` page and preloads the selected issue for return
   - Can search by issue ID, national ID and book ISBN
 - Returning a book:
   <img src='./src/assets/return-book-desktop.jpeg' />
-  - The page renders with the selected issue preloaded
+  - The page renders with the selected issue preloaded (from the `Issues` view)
   - The rent fee is calculated and displayed
   - The return is completed when `Return book` is clicked
-  - The book quantity is updated on submission (+1)
+  - The book quantity is updated on submission (i.e +1)
 - Viewing book returns logged in the system:
   <img src='./src/assets/returns-desktop.jpeg' />
   - Displays all details regarding a particular issue i.e issue ID, book ISBN, member ID, dates etc
