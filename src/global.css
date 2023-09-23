@@ -199,7 +199,7 @@ label {
 input {
   padding: 7px 10px 3px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid grey;
 }
 
 input:focus {
@@ -239,8 +239,6 @@ a {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  border: 1px solid grey;
 }
 
 .view__banner {
@@ -253,10 +251,11 @@ a {
 
 .view__banner h1 {
   font-family: 'Nunito Sans';
+  text-align: center;
   letter-spacing: 2px;
   align-self: center;
   text-transform: uppercase;
-  font-size: 2.3em;
+  font-size: 2.1em;
   font-weight: 600;
 }
 
@@ -285,7 +284,7 @@ nav {
   border-right: 1px solid grey;
   display: flex;
   flex-direction: column;
-  row-gap: 15px;
+  gap: 15px;
 }
 
 nav a {
@@ -320,7 +319,7 @@ main {
 }
 
 .form_search {
-  width: 40vw;
+  width: auto;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -331,7 +330,7 @@ main {
 select {
   border-radius: 0;
   border: none;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid grey;
 }
 
 .form_search input:focus,
@@ -341,12 +340,12 @@ select:focus {
 }
 
 .form_search input {
-  flex-grow: 2;
+  width: 350px;
 }
 
 .form_search select {
+  width: 175px;
   padding: 7px 10px 3px;
-  flex-grow: 1;
 }
 
 .form_search button {
@@ -374,7 +373,7 @@ select:focus {
 
 .container__alt {
   align-items: center;
-  column-gap: 0;
+  gap: 0;
   margin-bottom: 5vh;
 }
 
@@ -411,36 +410,10 @@ select:focus {
   border-top: 1px solid orange;
 }
 
-.view_calculation {
-  width: 15vw;
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  place-content: center;
-}
-
-.view_calculation > span {
-  padding: 5px 0;
-}
-
-.view_calculation button {
-  margin-top: 3vh;
-  background-color: white;
-  border: 1px solid grey;
-  color: grey;
-}
-
-.view_calculation button:hover {
-  border: 1px solid orange;
-  color: orange;
-}
-
-.issue_members button {
-  margin-top: 5vh;
-}
-
 article {
   width: 245px;
   padding: 20px;
+  background-color: white;
   border-radius: 10px;
   border: 1px solid grey;
 }
@@ -505,6 +478,7 @@ article span {
 }
 
 .card_actions .card__action_secondary {
+  background-color: transparent;
   border: none;
   color: orange;
   transform: translateY(1px);
@@ -516,7 +490,7 @@ article span {
 }
 
 .toggleForm {
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   right: 30px;
 }
@@ -526,4 +500,31 @@ article span {
   border: 1px solid red;
   background-color: white;
   color: red;
+}
+
+.view_calculation {
+  width: 15vw;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  place-content: center;
+}
+
+.view_calculation > span {
+  padding: 5px 0;
+}
+
+.view_calculation button {
+  margin-top: 3vh;
+  background-color: white;
+  border: 1px solid grey;
+  color: grey;
+}
+
+.view_calculation button:hover {
+  border: 1px solid orange;
+  color: orange;
+}
+
+.issue_members button {
+  margin-top: 5vh;
 }

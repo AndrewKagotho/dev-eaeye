@@ -5,6 +5,7 @@ import { Members } from './views/members.view'
 import { Returns } from './views/returns.view'
 import { Nav } from './features/app/nav.app'
 import './global.css'
+import './responsiveGlobal.css'
 
 const router = createBrowserRouter([
   {
