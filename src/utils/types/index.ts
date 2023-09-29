@@ -9,34 +9,34 @@ export type InitialStateType = {
 
 export type BookType = {
   isbn: number
-  title?: string
-  author?: string
-  fee?: number
-  quantity?: number
+  title: string
+  author: string
+  fee: number
+  quantity: number
 }
 
 export type MemberType = {
   nationalId: number
-  firstName?: string
-  lastName?: string
-  email?: string
+  firstName: string
+  lastName: string
+  email: string
 }
 
 export type IssueType = {
-  issueId?: number
+  issueId: number
   bookIsbn: number
   memberNationalId: number
-  createdAt?: any
+  createdAt: string
 }
 
-export type ReturnType = {
-  returnId?: number
+export type BookReturnType = {
+  returnId: number
   pay: number
   issueId: number
   bookIsbn: number
   memberNationalId: number
   issuedDate: string
-  returnDate?: string
+  returnDate: string
 }
 
 export type ContextProviderProps = {
@@ -44,7 +44,7 @@ export type ContextProviderProps = {
 }
 
 export type CardType = {
-  id?: number
+  id: number
   title: string | number
   subtitle: string | number
   details: { name: string; content: string | number }[]

@@ -8,18 +8,20 @@ import { fetchMembers } from '../member/member.slice'
 import { RenderMembers } from '../member/render.member'
 import { Preview } from '../issue/preview.issue'
 import { Search } from '../member/search.member'
-import type { BookType, MemberType } from '../../utils/types'
+import type { DisplayType, BookType, MemberType } from '../../utils/types'
 
-export const AddIssue = ({ setDisplay }) => {
+export const AddIssue: React.FC<{
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayType>>
+}> = ({ setDisplay }) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [selectedBook, setSelectedBook] = useState({} as BookType)
   const [selectedMember, setSelectedMember] = useState<MemberType | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const isbnParam = searchParams.get('isbn')
-  const typeParam = searchParams.get('type')
-  const itemParam = searchParams.get('item')
+  const isbnParam = searchParams.get('isbn') as string
+  const typeParam = searchParams.get('type') as string
+  const itemParam = searchParams.get('item') as string
 
   useEffect(() => {
     dispatch(fetchBook(+isbnParam))
@@ -35,10 +37,10 @@ export const AddIssue = ({ setDisplay }) => {
     // eslint-disable-next-line
   }, [typeParam, itemParam])
 
-  const handleIssue = () => {
+  const handleIssue = (): void => {
     const data = {
       bookIsbn: selectedBook.isbn,
-      memberNationalId: selectedMember.nationalId
+      memberNationalId: selectedMember!.nationalId
     }
     dispatch(addIssue(data)).then(() => {
       alert('Book issued!')

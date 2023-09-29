@@ -1,7 +1,12 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import type { QueryType } from '../../utils/types'
 
-export const Search = ({ setSearchParams }) => {
+export const Search = ({
+  setSearchParams
+}: {
+  setSearchParams: ReturnType<typeof useSearchParams>[1]
+}) => {
   const [query, setQuery] = useState({ type: 'returnId' } as QueryType)
 
   const handleChange = (
@@ -11,7 +16,11 @@ export const Search = ({ setSearchParams }) => {
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    setSearchParams(query)
+    setSearchParams((prev) => {
+      prev.set('type', query.type)
+      prev.set('item', query.item)
+      return prev
+    })
     e.preventDefault()
   }
 

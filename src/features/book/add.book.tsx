@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { addBook } from './book.slice'
-import type { BookType } from '../../utils/types'
+import type { DisplayType, BookType } from '../../utils/types'
 
-export const AddBook = ({ setDisplay }) => {
+export const AddBook = ({
+  setDisplay
+}: {
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayType>>
+}) => {
   const dispatch = useAppDispatch()
   const bookState = useAppSelector((state) => state.book)
   const isLoading = bookState.isLoading

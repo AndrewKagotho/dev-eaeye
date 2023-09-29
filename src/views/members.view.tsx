@@ -11,12 +11,12 @@ import type { DisplayType, MemberType } from '../utils/types'
 
 export const Members = () => {
   const dispatch = useAppDispatch()
-  const [display, setDisplay] = useState<DisplayType>('read')
-  const [selectedMember, setSelectedMember] = useState({} as MemberType)
+  const [display, setDisplay] = useState('read' as DisplayType)
+  const [selectedMember, setSelectedMember] = useState<MemberType | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const typeParam = searchParams.get('type')
-  const itemParam = searchParams.get('item')
+  const typeParam = searchParams.get('type') as string
+  const itemParam = searchParams.get('item') as string
 
   useEffect(() => {
     dispatch(fetchMembers({ type: typeParam, item: itemParam }))

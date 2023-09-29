@@ -1,22 +1,22 @@
 import { useAppSelector } from '../../hooks'
-import type { MemberType } from '../../utils/types'
 import { Card } from '../../components/card'
+import type { DisplayType, MemberType } from '../../utils/types'
 
-export const RenderMembers = ({
-  setDisplay,
-  setSelectedMember,
-  select = false
-}) => {
+export const RenderMembers: React.FC<{
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayType>>
+  setSelectedMember: React.Dispatch<React.SetStateAction<MemberType | null>>
+  select?: boolean
+}> = ({ setDisplay, setSelectedMember, select = false }) => {
   const memberState = useAppSelector((state) => state.member)
   const isLoading = memberState.isLoading
   const members = memberState.data
   const error = memberState.error
 
   const handleUpdate = (nationalId: number) => {
-    const object = members.find(
+    const object = members?.find(
       ({ nationalId: memberNationalId }) => memberNationalId === nationalId
     )
-    setSelectedMember(object)
+    if (object !== undefined) setSelectedMember(object)
     if (!select) setDisplay('update')
   }
 

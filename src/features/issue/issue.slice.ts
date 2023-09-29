@@ -68,7 +68,7 @@ export const fetchIssue = createAsyncThunk(
 
 export const addIssue = createAsyncThunk(
   'issue/add',
-  async (data: IssueType) => {
+  async (data: Omit<IssueType, 'issueId' | 'createdAt'>) => {
     const res = await IssueService.createIssue(data)
     return res.data
   }

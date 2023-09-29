@@ -13,8 +13,8 @@ export const Issues = () => {
   const [display, setDisplay] = useState<DisplayType>('read')
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const typeParam = searchParams.get('type')
-  const itemParam = searchParams.get('item')
+  const typeParam = searchParams.get('type') as string
+  const itemParam = searchParams.get('item') as string
   const newParam = searchParams.get('new')
 
   useEffect(() => {

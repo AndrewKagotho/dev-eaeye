@@ -9,7 +9,7 @@ const getIssue = (issueId: number) => {
   return api.get(`/issues/${issueId}`)
 }
 
-const createIssue = (data: IssueType) => {
+const createIssue = (data: Omit<IssueType, 'issueId' | 'createdAt'>) => {
   return api.post('/issues', data)
 }
 

@@ -1,8 +1,15 @@
 import { useAppSelector } from '../../hooks'
 import { Card } from '../../components/card'
 import { parseDate } from '../../utils/functions'
+import type { BookType, MemberType, IssueType } from '../../utils/types'
 
-export const Preview = ({
+export const Preview: React.FC<{
+  selectedBook: BookType
+  selectedMember: MemberType
+  selectedIssue: IssueType
+  handleReturn(): void
+  returnSummary: { timeDifference: number; fee: number }
+}> = ({
   selectedBook,
   selectedMember,
   selectedIssue,
@@ -15,33 +22,33 @@ export const Preview = ({
     <>
       <section className='card_container container__alt'>
         <Card
-          id={selectedBook?.isbn}
-          title={selectedBook?.title}
-          subtitle={selectedBook?.author}
+          id={selectedBook.isbn}
+          title={selectedBook.title}
+          subtitle={selectedBook.author}
           details={[
-            { name: 'ISBN', content: selectedBook?.isbn },
-            { name: 'Quantity', content: selectedBook?.quantity }
+            { name: 'ISBN', content: selectedBook.isbn },
+            { name: 'Quantity', content: selectedBook.quantity }
           ]}
         />
         <hr />
         <Card
-          id={selectedIssue?.issueId}
-          title={selectedIssue?.issueId}
+          id={selectedIssue.issueId}
+          title={selectedIssue.issueId}
           subtitle='Issue ID'
           details={[
-            { name: 'National ID', content: selectedIssue?.memberNationalId },
-            { name: 'ISBN', content: selectedIssue?.bookIsbn },
-            { name: 'Issued on', content: parseDate(selectedIssue?.createdAt) }
+            { name: 'National ID', content: selectedIssue.memberNationalId },
+            { name: 'ISBN', content: selectedIssue.bookIsbn },
+            { name: 'Issued on', content: parseDate(selectedIssue.createdAt) }
           ]}
         />
         <hr />
         <Card
-          id={selectedMember?.nationalId}
-          title={selectedMember?.firstName}
-          subtitle={selectedMember?.lastName}
+          id={selectedMember.nationalId}
+          title={selectedMember.firstName}
+          subtitle={selectedMember.lastName}
           details={[
-            { name: 'National ID', content: selectedMember?.nationalId },
-            { name: 'Email', content: selectedMember?.email }
+            { name: 'National ID', content: selectedMember.nationalId },
+            { name: 'Email', content: selectedMember.email }
           ]}
         />
       </section>

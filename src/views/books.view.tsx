@@ -15,8 +15,8 @@ export const Books = () => {
   const [selectedBook, setSelectedBook] = useState({} as BookType)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const typeParam = searchParams.get('type')
-  const itemParam = searchParams.get('item')
+  const typeParam = searchParams.get('type') as string
+  const itemParam = searchParams.get('item') as string
 
   useEffect(() => {
     dispatch(fetchBooks({ type: typeParam, item: itemParam }))

@@ -7,18 +7,25 @@ import { fetchBook } from '../book/book.slice'
 import { fetchMember } from '../member/member.slice'
 import { addReturn } from './return.slice'
 import { Preview } from '../return/preview.return'
-import type { BookType, MemberType, IssueType } from '../../utils/types'
+import type {
+  DisplayType,
+  BookType,
+  MemberType,
+  IssueType
+} from '../../utils/types'
 import moment from 'moment'
 
-export const AddReturn = ({ setDisplay }) => {
+export const AddReturn: React.FC<{
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayType>>
+}> = ({ setDisplay }) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [selectedBook, setSelectedBook] = useState({} as BookType)
-  const [selectedMember, setSelectedMember] = useState<MemberType | null>(null)
-  const [selectedIssue, setSelectedIssue] = useState<IssueType | null>(null)
+  const [selectedMember, setSelectedMember] = useState({} as MemberType)
+  const [selectedIssue, setSelectedIssue] = useState({} as IssueType)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const issueIDParam = searchParams.get('issueId')
+  const issueIDParam = searchParams.get('issueId') as string
 
   useEffect(() => {
     dispatch(fetchIssue(+issueIDParam))
@@ -35,7 +42,7 @@ export const AddReturn = ({ setDisplay }) => {
     // eslint-disable-next-line
   }, [])
 
-  const returnSummary = (() => {
+  const returnSummary: { timeDifference: number; fee: number } = (() => {
     const createdAt = moment(selectedIssue?.createdAt)
     const currentDate = moment()
     let timeDifference = moment(currentDate).diff(createdAt, 'days')

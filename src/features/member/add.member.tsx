@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { addMember } from './member.slice'
-import type { MemberType } from '../../utils/types'
+import type { DisplayType, MemberType } from '../../utils/types'
 
-export const AddMember = ({ setDisplay }) => {
+export const AddMember: React.FC<{
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayType>>
+}> = ({ setDisplay }) => {
   const dispatch = useAppDispatch()
   const memberState = useAppSelector((state) => state.member)
   const isLoading = memberState.isLoading

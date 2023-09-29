@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import { updateBook, deleteBook } from './book.slice'
-import type { BookType } from '../../utils/types'
+import type { DisplayType, BookType } from '../../utils/types'
 
-export const EditBook = ({ setDisplay, selectedBook }) => {
+export const EditBook: React.FC<{
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayType>>
+  selectedBook: BookType
+}> = ({ setDisplay, selectedBook }) => {
   const dispatch = useAppDispatch()
   const bookState = useAppSelector((state) => state.book)
   const isLoading = bookState.isLoading

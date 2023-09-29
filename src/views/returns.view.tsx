@@ -10,20 +10,15 @@ import type { DisplayType } from '../utils/types'
 
 export const Returns = () => {
   const dispatch = useAppDispatch()
-  const [display, setDisplay] = useState<DisplayType>('read')
+  const [display, setDisplay] = useState('read' as DisplayType)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const typeParam = searchParams.get('type')
-  const itemParam = searchParams.get('item')
+  const typeParam = searchParams.get('type') as string
+  const itemParam = searchParams.get('item') as string
   const newParam = searchParams.get('new')
 
   useEffect(() => {
-    dispatch(
-      fetchReturns({
-        type: typeParam as 'title' | 'isbn' | 'author',
-        item: itemParam
-      })
-    )
+    dispatch(fetchReturns({ type: typeParam, item: itemParam }))
     if (newParam === 'true') setDisplay('create')
     // eslint-disable-next-line
   }, [typeParam, itemParam, display === 'read'])

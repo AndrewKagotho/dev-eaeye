@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../hooks'
-import type { ReturnType } from '../../utils/types'
+import type { BookReturnType } from '../../utils/types'
 import { Card } from '../../components/card'
 import { parseDate } from '../../utils/functions'
 
@@ -15,7 +15,7 @@ export const RenderReturns = () => {
       {!isLoading && returns && (
         <>
           <section className='card_container'>
-            {returns.map((returnItem: ReturnType) => (
+            {returns.map((returnItem: BookReturnType) => (
               <Card
                 key={returnItem.returnId}
                 id={returnItem.returnId}

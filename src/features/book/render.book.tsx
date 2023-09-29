@@ -1,9 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../hooks'
-import type { BookType } from '../../utils/types'
+import type { DisplayType, BookType } from '../../utils/types'
 import { Card } from '../../components/card'
 
-export const RenderBooks = ({ setDisplay, setSelectedBook }) => {
+export const RenderBooks: React.FC<{
+  setDisplay: React.Dispatch<React.SetStateAction<DisplayType>>
+  setSelectedBook: React.Dispatch<React.SetStateAction<BookType>>
+  select?: boolean
+}> = ({ setDisplay, setSelectedBook }) => {
   const navigate = useNavigate()
   const bookState = useAppSelector((state) => state.book)
   const isLoading = bookState.isLoading
@@ -11,8 +15,8 @@ export const RenderBooks = ({ setDisplay, setSelectedBook }) => {
   const error = bookState.error
 
   const handleUpdate = (isbn: number) => {
-    const object = books.find(({ isbn: bookIsbn }) => bookIsbn === isbn)
-    setSelectedBook(object)
+    const object = books?.find(({ isbn: bookIsbn }) => bookIsbn === isbn)
+    if (object !== undefined) setSelectedBook(object)
     setDisplay('update')
   }
 

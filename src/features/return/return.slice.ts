@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import type { InitialStateType, ReturnType, QueryType } from '../../utils/types'
+import type {
+  InitialStateType,
+  BookReturnType,
+  QueryType
+} from '../../utils/types'
 import ReturnService from '../../services/return.service'
 
 const initialState: InitialStateType = {
@@ -49,7 +53,7 @@ export const fetchReturns = createAsyncThunk(
 
 export const addReturn = createAsyncThunk(
   'return/add',
-  async (data: ReturnType) => {
+  async (data: Omit<BookReturnType, 'returnId' | 'returnDate'>) => {
     const res = await ReturnService.createReturn(data)
     return res.data
   }

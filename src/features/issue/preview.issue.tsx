@@ -1,12 +1,13 @@
 import { useAppSelector } from '../../hooks'
 import { Card } from '../../components/card'
+import { BookType, MemberType } from '../../utils/types'
 
-export const Preview = ({
-  selectedBook,
-  selectedMember,
-  setSelectedMember,
-  handleIssue
-}) => {
+export const Preview: React.FC<{
+  selectedBook: BookType
+  selectedMember: MemberType | null
+  setSelectedMember: React.Dispatch<React.SetStateAction<MemberType | null>>
+  handleIssue(): void
+}> = ({ selectedBook, selectedMember, setSelectedMember, handleIssue }) => {
   const bookState = useAppSelector((state) => state.book)
   const isBookLoading = bookState.isLoading
   const error = bookState.error
